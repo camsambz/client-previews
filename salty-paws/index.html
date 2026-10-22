@@ -156,6 +156,12 @@ section.band { padding-block: clamp(56px, 8vw, 104px); }
   font-size: .68rem; font-weight: 700; letter-spacing: .14em; color: var(--teal-deep);
 }
 
+/* Photos */
+.ph.has-img { border: 0; background: var(--sand); }
+.ph.has-img::before { display: none; }
+.ph.has-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.ba-pair .ph.has-img::before { display: block; content: attr(data-k); z-index: 1; top: 10px; left: 10px; padding: 3px 8px; border-radius: 999px; background: var(--paper); color: var(--teal-deep); font-size: .64rem; }
+
 /* Home hero */
 .hero { padding-block: clamp(40px, 6vw, 80px) clamp(40px, 6vw, 72px); }
 .hero-grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: clamp(28px, 5vw, 64px); align-items: center; }
@@ -515,7 +521,7 @@ footer.site .todo { color: #FFB3A8; background: rgba(242,107,91,.18); }
           <a class="text-link" href="#areas" data-view="areas">Check if we serve your area</a>
         </div>
       </div>
-      <div class="ph"><span>Danielle or Marco greeting a dog at the van in a driveway</span></div>
+      <div class="ph has-img"><img src="https://images.unsplash.com/photo-1719464454959-9cf304ef4774?auto=format&fit=crop&w=1400&q=70" alt="A groomer trimming a small white dog with scissors" decoding="async"></div>
     </div>
   </section>
 
@@ -574,9 +580,9 @@ footer.site .todo { color: #FFB3A8; background: rgba(242,107,91,.18); }
   <section class="band">
     <div class="wrap van-grid">
       <div class="van-photos">
-        <div class="ph"><span>Inside the van: the grooming table and tub</span></div>
-        <div class="ph"><span>Hydraulic table lowered for a senior dog</span></div>
-        <div class="ph"><span>Outside of the van with your logo</span></div>
+        <div class="ph has-img"><img src="https://images.unsplash.com/photo-1647002380358-fc70ed2f04e0?auto=format&fit=crop&w=900&q=70" alt="A dog waiting in the grooming tub" loading="lazy" decoding="async"></div>
+        <div class="ph has-img"><img src="https://images.unsplash.com/photo-1619590694371-7eed5838e880?auto=format&fit=crop&w=700&q=70" alt="A senior yellow Labrador resting" loading="lazy" decoding="async"></div>
+        <div class="ph has-img"><img src="https://images.unsplash.com/photo-1768400554801-2002b63e0591?auto=format&fit=crop&w=700&q=70" alt="A white grooming van parked outside" loading="lazy" decoding="async"></div>
       </div>
       <div class="prose">
         <p class="eyebrow">Inside the van</p>
@@ -738,10 +744,10 @@ footer.site .todo { color: #FFB3A8; background: rgba(242,107,91,.18); }
   </section>
   <section class="band band-paper" style="padding-top:clamp(40px,6vw,64px)">
     <div class="wrap ba-grid">
-      <figure class="ba" style="margin:0"><div class="ba-pair"><div class="ph" data-k="BEFORE"><span>Doodle before</span></div><div class="ph" data-k="AFTER"><span>Doodle after</span></div></div><figcaption>Full Groom · <span class="todo">[pet name, town]</span></figcaption></figure>
-      <figure class="ba" style="margin:0"><div class="ba-pair"><div class="ph" data-k="BEFORE"><span>Senior dog before</span></div><div class="ph" data-k="AFTER"><span>Senior dog after</span></div></div><figcaption>Senior &amp; Special Care · <span class="todo">[pet name, town]</span></figcaption></figure>
-      <figure class="ba" style="margin:0"><div class="ba-pair"><div class="ph" data-k="BEFORE"><span>Short coat before</span></div><div class="ph" data-k="AFTER"><span>Short coat after</span></div></div><figcaption>Bath &amp; Tidy · <span class="todo">[pet name, town]</span></figcaption></figure>
-      <figure class="ba" style="margin:0"><div class="ba-pair"><div class="ph" data-k="BEFORE"><span>Cat before</span></div><div class="ph" data-k="AFTER"><span>Cat after</span></div></div><figcaption>Cat Groom · <span class="todo">[pet name, town]</span></figcaption></figure>
+      <figure class="ba" style="margin:0"><div class="ba-pair"><div class="ph has-img" data-k="BEFORE"><img src="https://images.unsplash.com/photo-1772298755990-05d2394ec40e?auto=format&fit=crop&w=600&q=70" alt="A shaggy doodle before grooming" loading="lazy" decoding="async"></div><div class="ph has-img" data-k="AFTER"><img src="https://images.unsplash.com/photo-1772692194802-14e9ff2aa1f4?auto=format&fit=crop&w=600&q=70" alt="A freshly groomed doodle" loading="lazy" decoding="async"></div></div><figcaption>Full Groom · <span class="todo">[pet name, town]</span></figcaption></figure>
+      <figure class="ba" style="margin:0"><div class="ba-pair"><div class="ph has-img" data-k="BEFORE"><img src="https://images.unsplash.com/photo-1642303009699-7d7fd6d4a243?auto=format&fit=crop&w=600&q=70" alt="A senior dog before grooming" loading="lazy" decoding="async"></div><div class="ph has-img" data-k="AFTER"><img src="https://images.unsplash.com/photo-1553531009-7e4b807a0673?auto=format&fit=crop&w=600&q=70" alt="A senior Labrador after grooming" loading="lazy" decoding="async"></div></div><figcaption>Senior &amp; Special Care · <span class="todo">[pet name, town]</span></figcaption></figure>
+      <figure class="ba" style="margin:0"><div class="ba-pair"><div class="ph has-img" data-k="BEFORE"><img src="https://images.unsplash.com/photo-1672426637959-49f39230ad7e?auto=format&fit=crop&w=600&q=70" alt="A short-coated dog mid-bath" loading="lazy" decoding="async"></div><div class="ph has-img" data-k="AFTER"><img src="https://images.unsplash.com/photo-1597595735781-6a57fb8e3e3d?auto=format&fit=crop&w=600&q=70" alt="A short-coated dog after a bath and tidy" loading="lazy" decoding="async"></div></div><figcaption>Bath &amp; Tidy · <span class="todo">[pet name, town]</span></figcaption></figure>
+      <figure class="ba" style="margin:0"><div class="ba-pair"><div class="ph has-img" data-k="BEFORE"><img src="https://images.unsplash.com/photo-1786247879512-4eb50c97b582?auto=format&fit=crop&w=600&q=70" alt="A tabby cat being brushed" loading="lazy" decoding="async"></div><div class="ph has-img" data-k="AFTER"><img src="https://images.unsplash.com/photo-1782927459488-8f49b7f11fa1?auto=format&fit=crop&w=600&q=70" alt="A fluffy cat after grooming" loading="lazy" decoding="async"></div></div><figcaption>Cat Groom · <span class="todo">[pet name, town]</span></figcaption></figure>
     </div>
   </section>
   <section class="band">
@@ -752,9 +758,9 @@ footer.site .todo { color: #FFB3A8; background: rgba(242,107,91,.18); }
         <p>Fresh water on board, a hydraulic table for senior dogs, and climate control. Just a parking spot near your door is all we need.</p>
       </div>
       <div class="van-photos">
-        <div class="ph"><span>Wide shot of the van interior</span></div>
-        <div class="ph"><span>Tub and water</span></div>
-        <div class="ph"><span>Climate control / dryer area</span></div>
+        <div class="ph has-img"><img src="https://images.unsplash.com/photo-1611173622933-91942d394b04?auto=format&fit=crop&w=900&q=70" alt="A Pomeranian in a towel being brushed after a bath" loading="lazy" decoding="async"></div>
+        <div class="ph has-img"><img src="https://images.unsplash.com/photo-1583534778255-5d67d3dcf95d?auto=format&fit=crop&w=700&q=70" alt="A dachshund in the bathtub" loading="lazy" decoding="async"></div>
+        <div class="ph has-img"><img src="https://images.unsplash.com/photo-1528846104175-4fd300ee59da?auto=format&fit=crop&w=700&q=70" alt="A groomer brushing out a fluffy white dog" loading="lazy" decoding="async"></div>
       </div>
     </div>
   </section>
@@ -770,7 +776,7 @@ footer.site .todo { color: #FFB3A8; background: rgba(242,107,91,.18); }
   </section>
   <section class="band band-paper" style="padding-top:clamp(40px,6vw,64px)">
     <div class="wrap story-grid">
-      <div class="ph"><span>Danielle with Biscuit</span></div>
+      <div class="ph has-img"><img src="https://images.unsplash.com/photo-1601375461722-bc5aea6eee82?auto=format&fit=crop&w=900&q=70" alt="Danielle holding a terrier mix" loading="lazy" decoding="async"></div>
       <div class="prose">
         <p>Danielle groomed for 8 years in salons around San Diego and kept seeing the same thing: good dogs getting stressed out sitting in kennels all day. Her own rescue, Biscuit, would shake the whole drive there.</p>
         <p>So she bought a used van, rebuilt it herself, and started grooming in driveways in Carlsbad. Word spread fast.</p>
@@ -793,11 +799,11 @@ footer.site .todo { color: #FFB3A8; background: rgba(242,107,91,.18); }
       <div class="sec-head"><p class="eyebrow">The team</p><h2>Same groomer, every visit.</h2></div>
       <div class="team">
         <div class="person">
-          <div class="ph"><span>Danielle headshot</span></div>
+          <div class="ph has-img"><img src="https://images.unsplash.com/photo-1679486311427-624861e41326?auto=format&fit=crop&w=500&q=70" alt="Danielle Ortiz" loading="lazy" decoding="async"></div>
           <div><h3>Danielle Ortiz</h3><p class="role">Owner &amp; Lead Groomer</p><p>11 years grooming, Fear Free Certified, specializes in doodles and anxious dogs. Mom to Biscuit, a very opinionated terrier mix.</p></div>
         </div>
         <div class="person">
-          <div class="ph"><span>Marco headshot</span></div>
+          <div class="ph has-img"><img src="https://images.unsplash.com/photo-1601758003453-6c950f17727d?auto=format&fit=crop&w=500&q=70" alt="Marco Reyes" loading="lazy" decoding="async"></div>
           <div><h3>Marco Reyes</h3><p class="role">Groomer</p><p>6 years of experience, great with big breeds and cats. Formerly at a vet clinic in Oceanside.</p></div>
         </div>
       </div>
