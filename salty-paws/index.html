@@ -379,6 +379,38 @@ footer.site .todo { color: #FFB3A8; background: rgba(242,107,91,.18); }
   .head-row .btn-book { display: none; }
 }
 
+/* Built-in booking */
+.book-grid { display: grid; grid-template-columns: 1.2fr .8fr; gap: clamp(28px, 5vw, 56px); align-items: start; }
+@media (max-width: 860px) { .book-grid { grid-template-columns: 1fr; } }
+.bk-step, .bk-done { display: grid; gap: 18px; }
+.bk-label { font-weight: 700; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--teal-deep); }
+.bk-progress { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.bk-progress span { height: 6px; border-radius: 99px; background: var(--line); }
+.bk-progress span.on { background: var(--coral); }
+.bk-nav { display: flex; gap: 10px; flex-wrap: wrap; }
+.svc-pick { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+@media (max-width: 480px) { .svc-pick { grid-template-columns: 1fr; } }
+.pick input, .days input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.pick span { display: grid; gap: 2px; padding: 14px 16px; border-radius: 14px; border: 1.5px solid var(--line); background: #fff; cursor: pointer; height: 100%; }
+.pick small { color: var(--muted); font-weight: 600; }
+.pick input:checked + span { border-color: var(--teal-deep); background: var(--teal-wash); box-shadow: inset 0 0 0 1px var(--teal-deep); }
+.pick input:focus-visible + span, .days input:focus-visible + span { outline: 3px solid var(--coral); outline-offset: 2px; }
+.days { display: grid; grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: 8px; }
+.days label span { display: grid; place-items: center; gap: 0; padding: 10px 6px; border-radius: 12px; border: 1.5px solid var(--line); background: #fff; cursor: pointer; text-align: center; line-height: 1.25; }
+.days label span b { font-family: var(--font-display); font-size: 1.3rem; font-variant-numeric: tabular-nums; }
+.days label span small { font-size: .78rem; font-weight: 600; color: var(--muted); }
+.days input:checked + span { background: var(--teal-deep); border-color: var(--teal-deep); color: var(--paper); }
+.days input:checked + span small { color: rgba(251,247,240,.8); }
+.days input:disabled + span { opacity: .4; cursor: not-allowed; text-decoration: line-through; }
+.mini-steps { margin: 0; padding-left: 1.2em; display: grid; gap: 6px; color: var(--muted); }
+.bk-done h2 { color: var(--teal-deep); }
+
+/* Preview toast for links that leave the site */
+.toast { position: fixed; left: 50%; bottom: calc(96px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); z-index: 70;
+  background: var(--teal-night); color: var(--paper); padding: 12px 18px; border-radius: 999px; font-weight: 600; font-size: .92rem;
+  box-shadow: 0 10px 30px rgba(14,71,70,.3); max-width: calc(100% - 32px); text-align: center; }
+@media (min-width: 761px) { .toast { bottom: 28px; } }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .btn, .faq summary::after { transition: none; }
@@ -388,7 +420,7 @@ footer.site .todo { color: #FFB3A8; background: rgba(242,107,91,.18); }
 
 <div class="review-bar">
   <div class="wrap">
-    <span><strong>Draft for review.</strong> Anything in a <span class="todo">coral box</span> needs a photo or an answer from you.</span>
+    <span><strong>Draft v2 for review.</strong> Anything in a <span class="todo">coral box</span> needs a photo or an answer from you.</span>
   </div>
 </div>
 
@@ -409,7 +441,7 @@ footer.site .todo { color: #FFB3A8; background: rgba(242,107,91,.18); }
         <a href="#areas" data-view="areas">Service areas</a>
         <a href="#faq" data-view="faq">FAQ</a>
       </nav>
-      <a class="btn btn-book btn-sm" href="https://saltypawsgrooming.moego.pet/booking" target="_blank" rel="noopener">Book Now</a>
+      <a class="btn btn-book btn-sm" href="#book" data-view="book">Book Now</a>
       <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mobileNav">Menu</button>
     </div>
     <nav class="mobile-nav" id="mobileNav" aria-label="Mobile" hidden>
@@ -437,7 +469,7 @@ footer.site .todo { color: #FFB3A8; background: rgba(242,107,91,.18); }
         <h1>The spa comes to your <em>driveway.</em></h1>
         <p class="lede">Our fully equipped grooming van parks at your home, and we bathe, trim, and pamper your pet one-on-one. No cages, no other animals, and no car rides.</p>
         <div class="hero-actions">
-          <a class="btn btn-book" href="https://saltypawsgrooming.moego.pet/booking" target="_blank" rel="noopener">Book a groom</a>
+          <a class="btn btn-book" href="#book" data-view="book">Book a groom</a>
           <a class="text-link" href="#areas" data-view="areas">Check if we serve your area</a>
         </div>
       </div>
@@ -540,7 +572,7 @@ footer.site .todo { color: #FFB3A8; background: rgba(242,107,91,.18); }
           <h2>$10 off every groom.</h2>
           <p>Book a recurring appointment every 4 to 6 weeks and save $10 on every visit. Your pet keeps the same groomer and a regular spot on the calendar. <span class="todo">[placeholder: please confirm this offer and any terms]</span></p>
         </div>
-        <a class="btn btn-teal" href="https://saltypawsgrooming.moego.pet/booking" target="_blank" rel="noopener">Book recurring</a>
+        <a class="btn btn-teal" href="#book" data-view="book">Book recurring</a>
       </div>
     </div>
   </section>
@@ -889,29 +921,109 @@ footer.site .todo { color: #FFB3A8; background: rgba(242,107,91,.18); }
 <div class="view" id="v-book" data-title="Book" hidden>
   <section class="page-hero">
     <div class="wrap sec-head">
-      <p class="eyebrow">Booking</p>
-      <h1>Book your groom in three steps.</h1>
+      <p class="eyebrow">Book a groom</p>
+      <h1>Book your groom in a minute.</h1>
+      <p class="lede">Pick a service, tell us about your pet, and choose a time. We'll confirm by text.</p>
     </div>
   </section>
   <section class="band band-paper" style="padding-top:clamp(40px,6vw,64px)">
-    <div class="wrap" style="display:grid;gap:32px">
-      <ol class="steps">
-        <li><h3>Check your zip</h3><p>Make sure you're inside our coastal North County service area.</p></li>
-        <li><h3>Pick a time online</h3><p>Choose your service and a time that works. Cats are Tuesdays and Thursdays.</p></li>
-        <li><h3>We pull up</h3><p>Meet us at the start and the end. We text you a photo when your pet is done.</p></li>
-      </ol>
-      <form class="zip-card" data-zip>
-        <label for="zipBook">Step 1: your zip code</label>
-        <div class="zip-row">
-          <input id="zipBook" inputmode="numeric" autocomplete="postal-code" maxlength="5" placeholder="e.g. 92024" aria-describedby="zipBookResult">
-          <button class="btn btn-teal" type="submit">Check</button>
+    <div class="wrap book-grid">
+      <form class="stack" id="bookForm" novalidate>
+        <div class="bk-progress" aria-hidden="true"><span class="on"></span><span></span><span></span></div>
+        <div class="bk-step" data-step="1">
+          <p class="bk-label">Step 1 of 3 · Service</p>
+          <fieldset>
+            <legend>What would you like?</legend>
+            <div class="svc-pick">
+              <label class="pick"><input type="radio" name="bkSvc" id="bkFull" value="Full Groom" checked><span><b>Full Groom</b><small>From $115</small></span></label>
+              <label class="pick"><input type="radio" name="bkSvc" id="bkBath" value="Bath &amp; Tidy"><span><b>Bath &amp; Tidy</b><small>From $85</small></span></label>
+              <label class="pick"><input type="radio" name="bkSvc" id="bkSenior" value="Senior &amp; Special Care Groom"><span><b>Senior &amp; Special Care</b><small>From $125</small></span></label>
+              <label class="pick"><input type="radio" name="bkSvc" id="bkCat" value="Cat Groom"><span><b>Cat Groom</b><small>From $130 · Tue &amp; Thu</small></span></label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Add-ons <span class="form-note">Optional</span></legend>
+            <div class="chips">
+              <label class="chip"><input type="checkbox" id="bkAdd1" name="bkAdd" value="Teeth brushing"><span>Teeth brushing</span></label>
+              <label class="chip"><input type="checkbox" id="bkAdd2" name="bkAdd" value="Blueberry facial"><span>Blueberry facial</span></label>
+              <label class="chip"><input type="checkbox" id="bkAdd3" name="bkAdd" value="Paw balm"><span>Paw balm</span></label>
+              <label class="chip"><input type="checkbox" id="bkAdd4" name="bkAdd" value="Flea &amp; tick bath"><span>Flea &amp; tick bath</span></label>
+              <label class="chip"><input type="checkbox" id="bkAdd5" name="bkAdd" value="Deshedding treatment"><span>Deshedding treatment</span></label>
+            </div>
+          </fieldset>
+          <div class="field">
+            <label for="bkZip">Your zip code</label>
+            <input id="bkZip" inputmode="numeric" maxlength="5" autocomplete="postal-code" placeholder="e.g. 92024">
+            <p class="zip-result" id="bkZipMsg" role="status"></p>
+          </div>
+          <div class="bk-nav"><button class="btn btn-teal" type="button" data-next="2">Next: your pet</button></div>
         </div>
-        <p class="zip-result" id="zipBookResult" role="status"></p>
+
+        <div class="bk-step" data-step="2" hidden>
+          <p class="bk-label">Step 2 of 3 · Your pet</p>
+          <div class="field-row">
+            <div class="field"><label for="bkPet">Pet's name</label><input id="bkPet" placeholder="e.g. Biscuit"></div>
+            <div class="field"><label for="bkBreed">Breed &amp; size</label><input id="bkBreed" placeholder="e.g. Goldendoodle, 55 lb"></div>
+          </div>
+          <fieldset>
+            <legend>Anything we should know? <span class="form-note">Pick any that apply</span></legend>
+            <div class="chips">
+              <label class="chip"><input type="checkbox" id="bkN1" name="bkNote" value="Nervous or reactive"><span>Nervous or reactive</span></label>
+              <label class="chip"><input type="checkbox" id="bkN2" name="bkNote" value="Senior"><span>Senior</span></label>
+              <label class="chip"><input type="checkbox" id="bkN3" name="bkNote" value="Matted coat"><span>Matted coat</span></label>
+              <label class="chip"><input type="checkbox" id="bkN4" name="bkNote" value="First groom with us"><span>First groom with us</span></label>
+            </div>
+          </fieldset>
+          <p class="form-note">Rabies vaccination is required for all pets.</p>
+          <div class="bk-nav"><button class="btn btn-ghost" type="button" data-next="1">Back</button><button class="btn btn-teal" type="button" data-next="3">Next: pick a time</button></div>
+        </div>
+
+        <div class="bk-step" data-step="3" hidden>
+          <p class="bk-label">Step 3 of 3 · Time &amp; contact</p>
+          <fieldset>
+            <legend>Pick a day</legend>
+            <div class="days" id="bkDays"></div>
+            <p class="form-note" id="bkDayNote"></p>
+          </fieldset>
+          <fieldset>
+            <legend>Time of day</legend>
+            <div class="chips">
+              <label class="chip"><input type="radio" name="bkTime" id="bkT1" value="Morning" checked><span>Morning</span></label>
+              <label class="chip"><input type="radio" name="bkTime" id="bkT2" value="Midday"><span>Midday</span></label>
+              <label class="chip"><input type="radio" name="bkTime" id="bkT3" value="Afternoon"><span>Afternoon</span></label>
+            </div>
+          </fieldset>
+          <div class="field-row">
+            <div class="field"><label for="bkName">Your name</label><input id="bkName" autocomplete="name"></div>
+            <div class="field"><label for="bkPhone">Mobile number</label><input id="bkPhone" type="tel" autocomplete="tel" placeholder="We'll confirm by text"></div>
+          </div>
+          <p class="zip-result no" id="bkErr" role="alert"></p>
+          <div class="bk-nav"><button class="btn btn-ghost" type="button" data-next="2">Back</button><button class="btn btn-book" type="submit">Request this time</button></div>
+          <p class="form-note">Please give us 24 hours notice to cancel. Late cancellations and no-shows are charged 50%.</p>
+        </div>
+
+        <div class="bk-done" id="bkDone" hidden>
+          <p class="eyebrow">Request sent</p>
+          <h2 id="bkDoneTitle">You're on the calendar!</h2>
+          <p id="bkSummary"></p>
+          <p>We'll text you to confirm the exact time. On grooming day, just meet us at the start and the end, and we'll send a photo when your pet is done.</p>
+          <div class="bk-nav"><button class="btn btn-ghost" type="button" id="bkAgain">Book another pet</button></div>
+        </div>
       </form>
-      <div class="hero-actions">
-        <a class="btn btn-book" href="https://saltypawsgrooming.moego.pet/booking" target="_blank" rel="noopener">Open online booking</a>
-        <span class="form-note">Rabies vaccination required. Please give 24 hours notice to cancel.</span>
-      </div>
+      <aside class="side">
+        <div class="panel">
+          <h3>How it works</h3>
+          <ol class="mini-steps">
+            <li>Pick your service and check your zip.</li>
+            <li>Tell us about your pet.</li>
+            <li>Choose a day. We text to confirm the time.</li>
+          </ol>
+        </div>
+        <div class="panel">
+          <h3>Rather text?</h3>
+          <p>Text <strong>(760) 555-0187</strong> and we'll book you in. Texting is preferred.</p>
+        </div>
+      </aside>
     </div>
   </section>
 </div>
@@ -926,7 +1038,7 @@ footer.site .todo { color: #FFB3A8; background: rgba(242,107,91,.18); }
       <p class="lede">Book online, or text us at <a class="phone-big" href="sms:+17605550187">(760) 555-0187</a></p>
     </div>
     <div class="closing-actions">
-      <a class="btn btn-book" href="https://saltypawsgrooming.moego.pet/booking" target="_blank" rel="noopener">Book Now</a>
+      <a class="btn btn-book" href="#book" data-view="book">Book Now</a>
     </div>
   </div>
 </section>
@@ -987,7 +1099,7 @@ footer.site .todo { color: #FFB3A8; background: rgba(242,107,91,.18); }
 </footer>
 
 <div class="mbar" role="region" aria-label="Quick booking">
-  <a class="btn btn-book" href="https://saltypawsgrooming.moego.pet/booking" target="_blank" rel="noopener">Book Now</a>
+  <a class="btn btn-book" href="#book" data-view="book">Book Now</a>
   <a class="btn btn-ghost" href="sms:+17605550187">Text us</a>
 </div>
 
@@ -1073,6 +1185,90 @@ footer.site .todo { color: #FFB3A8; background: rgba(242,107,91,.18); }
   document.getElementById("newsForm").addEventListener("submit", function (e) {
     e.preventDefault();
     document.getElementById("newsDone").hidden = false;
+  });
+  // Built-in booking flow
+  var bkForm = document.getElementById("bookForm");
+  var steps = bkForm.querySelectorAll(".bk-step");
+  var bars = bkForm.querySelectorAll(".bk-progress span");
+  function goStep(n) {
+    steps.forEach(function (st) { st.hidden = st.getAttribute("data-step") !== String(n); });
+    bars.forEach(function (b, i) { b.classList.toggle("on", i < n); });
+    document.getElementById("bkDone").hidden = true;
+    bkForm.querySelector(".bk-progress").hidden = false;
+    var top = bkForm.getBoundingClientRect().top + window.scrollY - 90;
+    if (window.scrollY > top) window.scrollTo(0, top);
+  }
+  function svc() { return bkForm.querySelector('input[name="bkSvc"]:checked').value; }
+  function zipOk() {
+    var z = document.getElementById("bkZip").value.replace(/\D/g, "");
+    var msg = document.getElementById("bkZipMsg");
+    msg.className = "zip-result";
+    if (z.length !== 5) { msg.textContent = "Enter your 5-digit zip code so we know we can reach you."; msg.classList.add("no"); return false; }
+    if (!ZIPS[z]) { msg.textContent = "Sorry, " + z + " is outside our area right now. Text us at (760) 555-0187 and we'll let you know if that changes."; msg.classList.add("no"); return false; }
+    msg.textContent = "Great, we come to " + ZIPS[z] + "."; msg.classList.add("ok"); return true;
+  }
+  var DAYNAMES = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+  var MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  function buildDays() {
+    var wrap = document.getElementById("bkDays"), isCat = svc() === "Cat Groom";
+    wrap.innerHTML = "";
+    var d = new Date(); d.setHours(0,0,0,0); d.setDate(d.getDate() + 1);
+    var first = null;
+    for (var i = 0; i < 14; i++) {
+      var day = d.getDay();
+      var closed = day === 0 || (isCat && day !== 2 && day !== 4);
+      var id = "bkDay" + i;
+      var lab = document.createElement("label");
+      lab.innerHTML = '<input type="radio" name="bkDay" id="' + id + '" value="' + DAYNAMES[day] + ", " + MONTHS[d.getMonth()] + " " + d.getDate() + '"' + (closed ? " disabled" : "") + '><span><small>' + DAYNAMES[day] + '</small><b>' + d.getDate() + '</b><small>' + MONTHS[d.getMonth()] + '</small></span>';
+      wrap.appendChild(lab);
+      if (!closed && !first) first = lab.querySelector("input");
+      d.setDate(d.getDate() + 1);
+    }
+    if (first) first.checked = true;
+    document.getElementById("bkDayNote").textContent = isCat ? "Cat grooms are Tuesdays and Thursdays, when the van is dog-free and quiet." : "We're closed Sundays.";
+  }
+  bkForm.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-next]");
+    if (!b) return;
+    var n = Number(b.getAttribute("data-next"));
+    var cur = Number(b.closest(".bk-step").getAttribute("data-step"));
+    if (cur === 1 && n === 2 && !zipOk()) { document.getElementById("bkZip").focus(); return; }
+    if (n === 3) buildDays();
+    goStep(n);
+  });
+  bkForm.addEventListener("change", function (e) { if (e.target.name === "bkSvc") buildDays(); });
+  bkForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var name = document.getElementById("bkName"), phone = document.getElementById("bkPhone"), err = document.getElementById("bkErr");
+    var day = bkForm.querySelector('input[name="bkDay"]:checked');
+    if (!name.value.trim() || phone.value.replace(/\D/g, "").length < 10) { err.textContent = "Add your name and a mobile number so we can confirm by text."; (name.value.trim() ? phone : name).focus(); return; }
+    if (!day) { err.textContent = "Pick a day that works for you."; return; }
+    err.textContent = "";
+    var pet = document.getElementById("bkPet").value.trim() || "your pet";
+    var time = bkForm.querySelector('input[name="bkTime"]:checked').value.toLowerCase();
+    var adds = Array.prototype.map.call(bkForm.querySelectorAll('input[name="bkAdd"]:checked'), function (c) { return c.value; });
+    document.getElementById("bkDoneTitle").textContent = pet === "your pet" ? "You're on the calendar!" : pet + " is on the calendar!";
+    document.getElementById("bkSummary").textContent = svc() + (adds.length ? " with " + adds.join(", ") : "") + " for " + pet + ", " + day.value + " in the " + time + ".";
+    steps.forEach(function (st) { st.hidden = true; });
+    bkForm.querySelector(".bk-progress").hidden = true;
+    document.getElementById("bkDone").hidden = false;
+  });
+  document.getElementById("bkAgain").addEventListener("click", function () { bkForm.reset(); document.getElementById("bkZipMsg").textContent = ""; goStep(1); });
+
+  // Draft preview: links to other websites stay inside the demo
+  var toastEl = null, toastTimer = null;
+  function toast(msg) {
+    if (!toastEl) { toastEl = document.createElement("div"); toastEl.className = "toast"; toastEl.setAttribute("role", "status"); document.body.appendChild(toastEl); }
+    toastEl.textContent = msg; toastEl.hidden = false;
+    clearTimeout(toastTimer); toastTimer = setTimeout(function () { toastEl.hidden = true; }, 2600);
+  }
+  var NAMES = { "instagram.com":"Instagram", "facebook.com":"Facebook", "tiktok.com":"TikTok", "g.page":"your Google reviews", "yelp.com":"Yelp" };
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest('a[href^="http"]');
+    if (!a || a.host === location.host) return;
+    e.preventDefault();
+    var host = a.hostname.replace(/^www\./, "");
+    toast("Preview: this opens " + (NAMES[host] || host) + " on the live site.");
   });
 })();
 </script>
