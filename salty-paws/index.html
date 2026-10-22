@@ -1,3 +1,8 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Salty Paws Mobile Grooming</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="robots" content="noindex, nofollow">
@@ -30,6 +35,9 @@
 }
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
+html, body { margin: 0; }
+img { max-width: 100%; height: auto; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 html { scroll-behavior: smooth; }
 body {
   background: var(--cream); color: var(--ink);
@@ -60,6 +68,7 @@ p { margin: 0; }
 }
 
 /* Review banner */
+.review-bar .short { display: none; }
 .review-bar { background: var(--teal-deep); color: var(--paper); font-size: .9rem; }
 .review-bar .wrap { padding-block: 8px; display: flex; gap: 8px 16px; flex-wrap: wrap; align-items: center; justify-content: center; text-align: center; }
 .review-bar .todo { color: var(--paper); background: rgba(242,107,91,.55); }
@@ -413,16 +422,47 @@ footer.site .todo { color: #FFB3A8; background: rgba(242,107,91,.18); }
   box-shadow: 0 10px 30px rgba(14,71,70,.3); max-width: calc(100% - 32px); text-align: center; }
 @media (min-width: 761px) { .toast { bottom: 28px; } }
 
+/* Phone polish */
+@media (max-width: 600px) {
+  body { font-size: 16px; }
+  section.band { padding-block: 44px; }
+  .page-hero { padding-block: 32px 24px; }
+  .hero { padding-block: 24px 32px; }
+  .hero-copy { gap: 16px; }
+  .hero .ph { min-height: 200px; border-radius: 22px 22px 64px 22px; }
+  .lede { font-size: 1.05rem; }
+  .stat { padding: 16px 14px; }
+  .stat b { font-size: 1.45rem; white-space: nowrap; }
+  .stat span { font-size: .85rem; }
+  .sec-head { margin-bottom: 24px; gap: 10px; }
+  .svc, .quote, .panel { padding: 20px; }
+  .quote blockquote { font-size: 1.1rem; }
+  .van-photos .ph:first-child { min-height: 180px; }
+  .van-photos .ph { min-height: 120px; }
+  .member { padding: 24px; border-radius: 22px; }
+  .review-bar .wrap { padding-block: 6px; font-size: .82rem; }
+  .review-bar .long { display: none; }
+  .review-bar .short { display: inline; }
+  .head-row { padding-block: 8px; }
+  .brand-mark { width: 36px; height: 36px; }
+  form.stack { padding: 18px; }
+  .closing .wrap { gap: 18px; }
+  footer.site { padding-block: 40px 110px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .btn, .faq summary::after { transition: none; }
   .btn:hover { transform: none; }
 }
 </style>
+</head>
+<body>
+
 
 <div class="review-bar">
   <div class="wrap">
-    <span><strong>Draft v2 for review.</strong> Anything in a <span class="todo">coral box</span> needs a photo or an answer from you.</span>
+    <span class="long"><strong>Draft v3 for review.</strong> Anything in a <span class="todo">coral box</span> needs a photo or an answer from you.</span><span class="short"><strong>Draft v3.</strong> <span class="todo">Coral boxes</span> need your input.</span>
   </div>
 </div>
 
@@ -1274,3 +1314,5 @@ footer.site .todo { color: #FFB3A8; background: rgba(242,107,91,.18); }
   });
 })();
 </script>
+</body>
+</html>
