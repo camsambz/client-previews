@@ -179,6 +179,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="../lib/lenis-1.3.27/lenis.css">
 <style>
 /* Layout: sticky header + one page per view (hash routed), cream ground, teal bands, coral for the booking action.
    Single light look by design: the client asked for no black backgrounds. */
@@ -612,6 +613,14 @@ footer.site .todo { color: #FFB3A8; background: rgba(242,107,91,.18); }
 .form-err { color: var(--todo); font-weight: 600; }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 
+/* Motion (see motion-standards.md) */
+.closing { position: relative; overflow: hidden; }
+.closing > .wrap { position: relative; z-index: 1; }
+.closing canvas.vanta-canvas { opacity: .55; }
+[data-split] .word, [data-split] .char { will-change: transform; }
+.hero h1.is-splitting em::after { transform: scaleX(0); opacity: 0; }
+.hero h1 em::after { transform-origin: left center; transition: transform .5s cubic-bezier(.2,.8,.2,1), opacity .2s; }
+
 /* Phone polish */
 @media (max-width: 600px) {
   body { font-size: 16px; }
@@ -702,7 +711,7 @@ footer.site .todo { color: #FFB3A8; background: rgba(242,107,91,.18); }
     <div class="wrap hero-grid">
       <div class="hero-copy">
         <p class="eyebrow">Mobile dog &amp; cat grooming · Coastal North County</p>
-        <h1 tabindex="-1">The spa comes to your <em>driveway.</em></h1>
+        <h1 tabindex="-1" data-split>The spa comes to your <em>driveway.</em></h1>
         <p class="lede">Our fully equipped grooming van parks at your home, and we bathe, trim, and pamper your pet one-on-one. No cages, no other animals, and no car rides.</p>
         <div class="hero-actions">
           <a class="btn btn-book" href="#book" data-view="book">Book a groom</a>
@@ -1279,7 +1288,7 @@ footer.site .todo { color: #FFB3A8; background: rgba(242,107,91,.18); }
 </main>
 
 <!-- Closing CTA band (every page) -->
-<section class="band band-teal closing">
+<section class="band band-teal closing" data-vanta="waves">
   <div class="wrap">
     <div style="display:grid;gap:10px">
       <h2>Ready for a calmer grooming day?</h2>
@@ -1578,6 +1587,73 @@ footer.site .todo { color: #FFB3A8; background: rgba(242,107,91,.18); }
     toast("Preview: this opens " + (NAMES[host] || host) + " on the live site.");
   });
 })();
+</script>
+<script defer src="../lib/lenis-1.3.27/lenis.min.js"></script>
+<script defer src="../lib/gsap-3.15.1/gsap.min.js"></script>
+<script defer src="../lib/gsap-3.15.1/ScrollTrigger.min.js"></script>
+<script defer src="../lib/gsap-3.15.1/SplitText.min.js"></script>
+<script>
+/* Motion layer: progressive enhancement only. The site is complete without it. See motion-standards.md. */
+window.addEventListener("load", function () {
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches || !window.gsap || !window.ScrollTrigger) return;
+  gsap.registerPlugin(ScrollTrigger);
+  if (window.SplitText) gsap.registerPlugin(SplitText);
+
+  var lenis = window.Lenis ? new Lenis({ syncTouch: false, lerp: 0.1 }) : null;
+  if (lenis) {
+    lenis.on("scroll", ScrollTrigger.update);
+    gsap.ticker.add(function (t) { lenis.raf(t * 1000); });
+    gsap.ticker.lagSmoothing(0);
+  }
+
+  var REVEAL = ".view:not([hidden]) :is(.sec-head, .svc, .quote, .trio > div, .panel, .person, .ba, .town, .steps li, .member, .van-photos .ph, .table-wrap, .faq details, .creds, .zip-card, .timeline li)";
+  var revealed = new WeakSet();
+  function setupReveals() {
+    gsap.utils.toArray(REVEAL).forEach(function (el, i) {
+      if (revealed.has(el)) return;
+      revealed.add(el);
+      var r = el.getBoundingClientRect();
+      if (r.top < innerHeight * 0.9) return;            // already on screen: leave it as is
+      gsap.from(el, { autoAlpha: 0, y: 20, duration: 0.7, ease: "power2.out",
+        scrollTrigger: { trigger: el, start: "top 90%", once: true } });
+    });
+    ScrollTrigger.refresh();
+  }
+
+  var h = document.querySelector("[data-split]");
+  if (h && window.SplitText && !document.getElementById("v-home").hidden) {
+    h.classList.add("is-splitting");
+    var split = SplitText.create(h, { type: "words", mask: "words", aria: "auto" });
+    gsap.from(split.words, { yPercent: 110, duration: 0.75, stagger: 0.07, ease: "back.out(1.6)",
+      onComplete: function () { h.classList.remove("is-splitting"); } });
+  }
+
+  var bg = document.querySelector("[data-vanta]"), fx = null;
+  var big = matchMedia("(min-width: 900px) and (hover: hover)");
+  function loadScript(src) { return new Promise(function (ok, no) { var s = document.createElement("script"); s.src = src; s.onload = ok; s.onerror = no; document.head.appendChild(s); }); }
+  function startVanta() {
+    if (!bg || fx || !big.matches) return;
+    var kind = bg.getAttribute("data-vanta");
+    (window.THREE ? Promise.resolve() : loadScript("../lib/three-0.134.0/three.min.js"))
+      .then(function () { return window.VANTA && VANTA[kind.toUpperCase()] ? null : loadScript("../lib/vanta-0.5.24/vanta." + kind + ".min.js"); })
+      .then(function () {
+        if (fx || !big.matches) return;
+        fx = VANTA[kind.toUpperCase()]({ el: bg, THREE: window.THREE, mouseControls: true, touchControls: false, gyroControls: false,
+          color: 0x14605f, shininess: 18, waveHeight: 12, waveSpeed: 0.55, zoom: 0.9 });
+      }).catch(function () {});
+  }
+  function stopVanta() { if (fx) { fx.destroy(); fx = null; } }
+  big.addEventListener("change", function () { big.matches ? startVanta() : stopVanta(); });
+  if ("IntersectionObserver" in window && bg) {
+    new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) startVanta(); }); }, { rootMargin: "300px" }).observe(bg);
+  }
+
+  setupReveals();
+  window.addEventListener("hashchange", function () {
+    if (lenis) lenis.scrollTo(0, { immediate: true });
+    requestAnimationFrame(setupReveals);
+  });
+});
 </script>
 </body>
 </html>
