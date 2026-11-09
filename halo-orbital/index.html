@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Halo Orbital | A Hotel in Low Earth Orbit (Concept)</title>
+<meta name="description" content="Halo Orbital is a fictional concept: a twelve-suite hotel 408 km above Earth, with sixteen sunrises a day. A motion design demo by The Academy.">
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Halo Orbital | A Hotel in Low Earth Orbit (Concept)">
+<meta property="og:description" content="A fictional orbital hotel, built as a motion design demo: smooth scroll, 3D backgrounds and scroll-driven animation.">
+<meta property="og:image" content="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=70">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "LodgingBusiness",
+ "name": "Halo Orbital (fictional concept)",
+ "description": "A fictional concept hotel in low Earth orbit, built as a motion design demo by The Academy.",
+ "slogan": "Check in above the weather."
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Manrope:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="../lib/lenis-1.3.27/lenis.css">
+<style>
+/* Halo Orbital — futuristic motion demo. Dark, single long page. */
+:root {
+  --void: #05070d;
+  --deep: #0a0f1c;
+  --panel: rgba(14, 22, 40, .72);
+  --line: rgba(120, 200, 255, .16);
+  --ink: #e8ecf5;
+  --muted: #9aa6c0;
+  --cyan: #5cf2ff;
+  --violet: #9a8cff;
+  --flare: #ff8a5c;
+  --display: "Unbounded", "Avenir Next", system-ui, sans-serif;
+  --body: "Manrope", "Segoe UI", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --wrap: 1180px;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { margin: 0; }
+img { max-width: 100%; height: auto; }
+body { background: var(--void); color: var(--ink); font-family: var(--body); font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: var(--cyan); }
+:focus-visible { outline: 3px solid var(--cyan); outline-offset: 3px; border-radius: 6px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.skip { position: absolute; left: 12px; top: -60px; z-index: 90; background: var(--cyan); color: var(--void); padding: 10px 14px; border-radius: 10px; font-weight: 700; text-decoration: none; }
+.skip:focus { top: 8px; }
+.wrap { max-width: var(--wrap); margin: 0 auto; padding-left: max(18px, env(safe-area-inset-left, 0px)); padding-right: max(18px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { font-family: var(--display); line-height: 1.02; letter-spacing: -.02em; margin: 0; text-wrap: balance; }
+p { margin: 0; }
+.label { font-family: var(--mono); font-size: .76rem; letter-spacing: .18em; text-transform: uppercase; color: var(--cyan); }
+.muted { color: var(--muted); }
+
+/* Concept bar */
+.concept { font-family: var(--mono); font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; text-align: center; padding: 7px 12px; background: linear-gradient(90deg, rgba(92,242,255,.12), rgba(154,140,255,.12)); color: var(--muted); border-bottom: 1px solid var(--line); }
+.concept b { color: var(--ink); font-weight: 600; }
+
+/* Header */
+header.top { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(14px) saturate(1.3); background: rgba(5, 7, 13, .62); border-bottom: 1px solid var(--line); }
+.top-row { display: flex; align-items: center; gap: 18px; padding-block: 10px; }
+.logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); margin-right: auto; min-height: 44px; }
+.logo svg { width: 30px; height: 30px; }
+.logo span { font-family: var(--display); font-weight: 700; letter-spacing: .06em; font-size: 1rem; }
+nav.links { display: flex; gap: 4px; }
+nav.links a { color: var(--muted); text-decoration: none; font-weight: 600; font-size: .92rem; padding: 10px 12px; border-radius: 999px; }
+nav.links a:hover { color: var(--ink); background: rgba(92,242,255,.08); }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; padding: 12px 22px; border-radius: 999px; font: 700 .98rem var(--body); text-decoration: none; border: 1px solid transparent; cursor: pointer; white-space: nowrap; }
+.btn-primary { color: var(--void); background: linear-gradient(110deg, var(--cyan), #b6fbff 45%, var(--violet)); box-shadow: 0 0 0 1px rgba(92,242,255,.4), 0 10px 40px -10px rgba(92,242,255,.6); }
+.btn-ghost { color: var(--ink); border-color: var(--line); background: rgba(255,255,255,.03); }
+.btn-ghost:hover { border-color: rgba(92,242,255,.5); }
+.btn-sm { min-height: 44px; padding: 10px 18px; font-size: .9rem; }
+@media (max-width: 860px) { nav.links { display: none; } .top-row .btn { display: none; } }
+
+/* Hero */
+.hero { position: relative; min-height: min(92vh, 860px); display: grid; align-items: center; overflow: hidden; isolation: isolate; }
+.hero-bg { position: absolute; inset: 0; z-index: -2; }
+/* Phone + fallback background: animated aurora and grid in pure CSS */
+.hero-bg::before { content: ""; position: absolute; inset: -20%; background:
+  radial-gradient(40% 35% at 25% 30%, rgba(92,242,255,.42), transparent 70%),
+  radial-gradient(35% 40% at 75% 60%, rgba(154,140,255,.46), transparent 70%),
+  radial-gradient(30% 30% at 60% 15%, rgba(255,138,92,.24), transparent 70%);
+  filter: blur(20px); animation: aurora 18s ease-in-out infinite alternate; }
+.hero-bg::after { content: ""; position: absolute; inset: 0; background-image:
+  linear-gradient(rgba(92,242,255,.14) 1px, transparent 1px), linear-gradient(90deg, rgba(92,242,255,.14) 1px, transparent 1px);
+  background-size: 44px 44px; mask-image: radial-gradient(ellipse at 50% 60%, #000 30%, transparent 75%); -webkit-mask-image: radial-gradient(ellipse at 50% 60%, #000 30%, transparent 75%);
+  animation: grid 12s linear infinite; }
+@keyframes aurora { to { transform: translate3d(4%, -3%, 0) rotate(8deg) scale(1.08); } }
+@keyframes grid { to { background-position: 0 44px, 44px 0; } }
+.hero-bg canvas.vanta-canvas { opacity: .9; }
+.hero-shade { position: absolute; inset: 0; z-index: -1; background: radial-gradient(ellipse at 30% 50%, rgba(5,7,13,.78), rgba(5,7,13,.35) 60%, rgba(5,7,13,.85)); }
+.hero-inner { display: grid; gap: 26px; padding-block: 72px 96px; max-width: 900px; }
+.hero h1 { font-size: clamp(2.6rem, 8.2vw, 6.4rem); font-weight: 800; }
+.hero h1 .glow { background: linear-gradient(100deg, var(--cyan), #ffffff 40%, var(--violet) 70%, var(--cyan)); background-size: 220% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: shine 6s linear infinite; }
+.hero h1 .glow * { background: inherit; background-size: inherit; -webkit-background-clip: text; background-clip: text; color: transparent; animation: inherit; }
+@keyframes shine { to { background-position: -220% 0; } }
+.hero .lede { font-size: clamp(1.05rem, 1.6vw, 1.25rem); color: #c7d0e4; max-width: 56ch; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+.coords { display: flex; flex-wrap: wrap; gap: 8px 22px; font-family: var(--mono); font-size: .8rem; color: var(--muted); }
+.coords b { color: var(--cyan); font-weight: 600; }
+
+/* Velocity marquee (React Bits ScrollVelocity idea) */
+.marquee { border-block: 1px solid var(--line); background: var(--deep); overflow: hidden; padding-block: 18px; }
+.marquee-track { display: flex; width: max-content; gap: 48px; font-family: var(--display); font-weight: 700; font-size: clamp(1.4rem, 3.4vw, 2.6rem); letter-spacing: -.01em; white-space: nowrap; animation: marquee 30s linear infinite; }
+.marquee-track em { font-style: normal; }
+.marquee-track span { display: inline-flex; gap: 48px; align-items: center; }
+.marquee-track i { font-style: normal; color: var(--cyan); }
+.marquee-track .hollow { color: transparent; -webkit-text-stroke: 1px rgba(232,236,245,.55); }
+@keyframes marquee { to { transform: translateX(-50%); } }
+
+section.block { padding-block: clamp(72px, 11vw, 140px); position: relative; }
+.sec-head { display: grid; gap: 16px; max-width: 760px; margin-bottom: clamp(36px, 5vw, 60px); }
+.sec-head h2 { font-size: clamp(1.9rem, 4.6vw, 3.4rem); font-weight: 700; }
+
+/* Statement with scroll-scrubbed word reveal (React Bits ScrollReveal idea) */
+.statement p { font-family: var(--display); font-weight: 500; font-size: clamp(1.6rem, 4.4vw, 3.4rem); line-height: 1.18; letter-spacing: -.015em; max-width: 22ch; }
+.statement p em { font-style: normal; color: var(--cyan); }
+
+/* Horizontal journey (pinned on desktop) */
+.journey { overflow: hidden; }
+.track { display: grid; gap: 22px; }
+.stage { position: relative; border: 1px solid var(--line); border-radius: 24px; padding: 30px; background: linear-gradient(160deg, rgba(20,30,55,.85), rgba(8,12,22,.9)); display: grid; gap: 14px; align-content: start; min-height: 320px; overflow: hidden; }
+.stage .num { font-family: var(--mono); color: var(--cyan); font-size: .85rem; }
+.stage h3 { font-size: clamp(1.5rem, 2.6vw, 2.1rem); }
+.stage p { color: #c2cbe0; }
+.stage .tmark { position: absolute; right: -10px; bottom: -40px; font-family: var(--display); font-weight: 800; font-size: 9rem; line-height: 1; color: transparent; -webkit-text-stroke: 1px rgba(92,242,255,.18); pointer-events: none; }
+@media (min-width: 900px) {
+  .journey.is-pinned .track { display: flex; gap: 28px; width: max-content; padding-right: 10vw; }
+  .journey.is-pinned .stage { width: min(560px, 44vw); min-height: 420px; }
+}
+
+/* Suites: spotlight cards (React Bits SpotlightCard idea) */
+.suites { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+@media (max-width: 900px) { .suites { grid-template-columns: 1fr; } }
+.spot { position: relative; border-radius: 22px; padding: 1px; background: linear-gradient(160deg, rgba(92,242,255,.35), rgba(154,140,255,.15) 40%, rgba(255,255,255,.04)); --x: 50%; --y: 0%; }
+.spot-inner { position: relative; border-radius: 21px; background: var(--deep); overflow: hidden; display: grid; height: 100%; }
+.spot-inner::before { content: ""; position: absolute; inset: 0; background: radial-gradient(420px circle at var(--x) var(--y), rgba(92,242,255,.16), transparent 45%); opacity: 0; transition: opacity .3s; pointer-events: none; z-index: 1; }
+.spot:hover .spot-inner::before { opacity: 1; }
+.spot figure { margin: 0; aspect-ratio: 16 / 10; overflow: hidden; background: #0d1426; }
+.spot figure img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .8s cubic-bezier(.2,.8,.2,1); }
+.spot:hover figure img { transform: scale(1.06); }
+.spot-body { padding: 24px; display: grid; gap: 10px; position: relative; z-index: 2; }
+.spot-body h3 { font-size: 1.3rem; }
+.spot-body p { color: #c2cbe0; font-size: .98rem; }
+.spot-meta { display: flex; flex-wrap: wrap; gap: 8px; font-family: var(--mono); font-size: .74rem; color: var(--muted); }
+.spot-meta span { border: 1px solid var(--line); border-radius: 999px; padding: 4px 10px; }
+.sample { position: absolute; left: 12px; top: 12px; z-index: 3; font-family: var(--mono); font-size: .62rem; letter-spacing: .14em; text-transform: uppercase; background: rgba(5,7,13,.75); color: var(--muted); padding: 3px 8px; border-radius: 999px; }
+
+/* Numbers */
+.numbers { display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--line); border-radius: 24px; overflow: hidden; background: rgba(10,15,28,.6); }
+.numbers div { padding: 28px 24px; display: grid; gap: 6px; border-left: 1px solid var(--line); }
+.numbers div:first-child { border-left: 0; }
+.numbers b { font-family: var(--display); font-weight: 700; font-size: clamp(2rem, 4.4vw, 3.4rem); color: var(--ink); font-variant-numeric: tabular-nums; line-height: 1; }
+.numbers b small { font-size: .45em; color: var(--cyan); margin-left: 4px; }
+.numbers div > span { color: var(--muted); font-size: .92rem; }
+@media (max-width: 760px) { .numbers { grid-template-columns: 1fr 1fr; } .numbers div:nth-child(3) { border-left: 0; } .numbers div:nth-child(n+3) { border-top: 1px solid var(--line); } }
+
+/* Reserve */
+.reserve { display: grid; grid-template-columns: 1.1fr .9fr; gap: clamp(28px, 5vw, 64px); align-items: start; }
+@media (max-width: 900px) { .reserve { grid-template-columns: 1fr; } }
+form.waitlist { display: grid; gap: 16px; padding: clamp(22px, 4vw, 34px); border-radius: 24px; border: 1px solid var(--line); background: var(--panel); backdrop-filter: blur(10px); }
+.field { display: grid; gap: 6px; }
+.field label, fieldset legend { font-weight: 700; font-size: .92rem; }
+input { font: 500 16px var(--body); color: var(--ink); background: rgba(5,7,13,.7); border: 1px solid rgba(120,200,255,.35); border-radius: 12px; padding: 13px 14px; width: 100%; }
+input::placeholder { color: #7f8aa3; }
+fieldset { border: 0; padding: 0; margin: 0; display: grid; gap: 10px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.chip span { display: inline-flex; align-items: center; min-height: 44px; padding: 8px 16px; border-radius: 999px; border: 1px solid var(--line); cursor: pointer; font-weight: 600; font-size: .92rem; }
+.chip input:checked + span { background: rgba(92,242,255,.14); border-color: var(--cyan); color: var(--cyan); }
+.chip input:focus-visible + span { outline: 3px solid var(--cyan); outline-offset: 2px; }
+.form-err { color: var(--flare); font-weight: 600; min-height: 1.4em; }
+.form-done { border: 1px solid rgba(92,242,255,.4); background: rgba(92,242,255,.08); border-radius: 14px; padding: 14px 16px; font-weight: 600; }
+.note { font-size: .86rem; color: var(--muted); }
+
+footer.site { border-top: 1px solid var(--line); padding-block: 48px 120px; color: var(--muted); font-size: .92rem; }
+.foot { display: flex; flex-wrap: wrap; gap: 18px 40px; justify-content: space-between; align-items: center; }
+.foot a { color: var(--muted); display: inline-block; padding-block: 12px; }
+
+/* Phone bar */
+.mbar { display: none; }
+@media (max-width: 860px) {
+  .mbar { display: block; position: fixed; left: 0; right: 0; bottom: 0; z-index: 60; padding: 10px max(14px, env(safe-area-inset-right, 0px)) calc(10px + env(safe-area-inset-bottom, 0px)) max(14px, env(safe-area-inset-left, 0px)); background: rgba(5,7,13,.86); backdrop-filter: blur(12px); border-top: 1px solid var(--line); }
+  .mbar .btn { width: 100%; }
+}
+@media (max-width: 600px) {
+  body { font-size: 16px; }
+  .hero { min-height: 86vh; }
+  .hero-inner { padding-block: 48px 72px; gap: 20px; }
+  .stage { padding: 24px; min-height: 0; }
+  .stage .tmark { font-size: 6rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-bg::before, .hero-bg::after, .marquee-track, .hero h1 .glow { animation: none !important; }
+  .spot figure img { transition: none; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="concept"><b>Concept demo</b> · Halo Orbital is fictional · Built by The Academy to show motion design</div>
+
+<header class="top">
+  <div class="wrap top-row">
+    <a class="logo" href="#top" aria-label="Halo Orbital, back to top">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><defs><linearGradient id="lg" x1="0" x2="1"><stop offset="0" stop-color="#5cf2ff"/><stop offset="1" stop-color="#9a8cff"/></linearGradient></defs><circle cx="16" cy="16" r="6" fill="url(#lg)"/><ellipse cx="16" cy="16" rx="14" ry="5.5" fill="none" stroke="url(#lg)" stroke-width="1.6" transform="rotate(-24 16 16)"/></svg>
+      <span>HALO ORBITAL</span>
+    </a>
+    <nav class="links" aria-label="Main">
+      <a href="#journey">The journey</a>
+      <a href="#suites">Suites</a>
+      <a href="#numbers">By the numbers</a>
+      <a href="#reserve">Waitlist</a>
+    </nav>
+    <a class="btn btn-primary btn-sm magnet" href="#reserve">Join the waitlist</a>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+  <section class="hero" id="top">
+    <div class="hero-bg" data-vanta="net" aria-hidden="true"></div>
+    <div class="hero-shade" aria-hidden="true"></div>
+    <div class="wrap hero-inner">
+      <p class="label" data-scramble>// Low Earth Orbit · 408 km · Now accepting waitlist</p>
+      <h1 data-split>Check in <span class="glow">above the weather.</span></h1>
+      <p class="lede">Halo Orbital is a twelve-suite hotel circling Earth every 90 minutes. Wake to a sunrise, then fifteen more before dinner.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary magnet" href="#reserve">Join the waitlist</a>
+        <a class="btn btn-ghost" href="#journey">See the journey</a>
+      </div>
+      <div class="coords" aria-label="Orbit details"><span>ALT <b>408 KM</b></span><span>SPEED <b>27,600 KM/H</b></span><span>ORBIT <b>90 MIN</b></span></div>
+    </div>
+  </section>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="skewer" data-velocity><div class="marquee-track">
+      <span>16 SUNRISES A DAY <i>✦</i> <em class="hollow">ZERO GRAVITY SPA</em> <i>✦</i> EARTH VIEW SUITES <i>✦</i> <em class="hollow">90 MINUTE ORBIT</em> <i>✦</i></span>
+      <span>16 SUNRISES A DAY <i>✦</i> <em class="hollow">ZERO GRAVITY SPA</em> <i>✦</i> EARTH VIEW SUITES <i>✦</i> <em class="hollow">90 MINUTE ORBIT</em> <i>✦</i></span>
+    </div></div>
+  </div>
+
+  <section class="block statement">
+    <div class="wrap">
+      <h2 class="sr-only">Why orbit</h2>
+      <p data-scrub>Most hotels promise a view. <em>We promise the whole planet,</em> turning slowly beneath your window, every ninety minutes, all night long.</p>
+    </div>
+  </section>
+
+  <section class="block journey" id="journey">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="label">// The journey</p>
+        <h2>Four stages from launch pad to landing.</h2>
+      </div>
+    </div>
+    <div class="wrap">
+      <div class="track">
+        <article class="stage"><p class="num">T−00:00</p><h3>Launch</h3><p>A smooth eight-minute climb from the coast to orbit, strapped into a seat with the best window you will ever have.</p><span class="tmark" aria-hidden="true">01</span></article>
+        <article class="stage"><p class="num">T+06:00</p><h3>Dock</h3><p>Your capsule meets the Halo ring. The hatch opens onto a lobby where the floor is optional.</p><span class="tmark" aria-hidden="true">02</span></article>
+        <article class="stage"><p class="num">Day 1–4</p><h3>Stay</h3><p>Float through Earth-view suites, the observation dome and the zero-gravity spa. Sixteen sunrises a day, no jet lag.</p><span class="tmark" aria-hidden="true">03</span></article>
+        <article class="stage"><p class="num">Day 5</p><h3>Return</h3><p>A gentle reentry and a splashdown, then a welcome home that feels a little heavier than you remember.</p><span class="tmark" aria-hidden="true">04</span></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="suites">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="label">// Suites</p>
+        <h2>Three ways to see the planet.</h2>
+      </div>
+      <div class="suites">
+        <article class="spot"><div class="spot-inner">
+          <figure><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=900&q=70" alt="Earth at night from orbit, city lights glowing"><span class="sample">Sample photo</span></figure>
+          <div class="spot-body"><h3>Earth View Suite</h3><p>A full-wall window that faces the planet, with a sleeping pod that keeps you gently anchored.</p><div class="spot-meta"><span>1–2 guests</span><span>Nadir window</span></div></div>
+        </div></article>
+        <article class="spot"><div class="spot-inner">
+          <figure><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=900&q=70" alt="The curve of Earth with the thin blue line of the atmosphere"><span class="sample">Sample photo</span></figure>
+          <div class="spot-body"><h3>Horizon Loft</h3><p>Two levels along the edge of the ring, framing the thin blue line of the atmosphere at every sunrise.</p><div class="spot-meta"><span>2–4 guests</span><span>Horizon view</span></div></div>
+        </div></article>
+        <article class="spot"><div class="spot-inner">
+          <figure><img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=900&q=70" alt="A spiral galaxy glowing in deep space"><span class="sample">Sample photo</span></figure>
+          <div class="spot-body"><h3>Deep Field Dome</h3><p>A clear dome turned away from Earth, for nights spent with the darkest sky there is.</p><div class="spot-meta"><span>2 guests</span><span>Zenith dome</span></div></div>
+        </div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="numbers">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="label">// By the numbers</p>
+        <h2>Life at 408 kilometers.</h2>
+      </div>
+      <div class="numbers">
+        <div><b><span data-count="408">408</span><small>km</small></b><span>Above sea level</span></div>
+        <div><b><span data-count="16">16</span></b><span>Sunrises a day</span></div>
+        <div><b><span data-count="90">90</span><small>min</small></b><span>One lap of Earth</span></div>
+        <div><b><span data-count="12">12</span></b><span>Suites on the ring</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="reserve">
+    <div class="wrap reserve">
+      <div class="sec-head" style="margin-bottom:0">
+        <p class="label">// Waitlist</p>
+        <h2>Reserve your place in line.</h2>
+        <p class="muted">Pick the suite you want and when you'd like to fly. This is a concept demo, so nothing is booked and nothing is sent.</p>
+      </div>
+      <form class="waitlist" id="waitlist" novalidate>
+        <div class="field"><label for="wName">Your name</label><input id="wName" autocomplete="name"></div>
+        <div class="field"><label for="wEmail">Email</label><input id="wEmail" type="email" autocomplete="email" placeholder="you@example.com"></div>
+        <fieldset>
+          <legend>Suite</legend>
+          <div class="chips">
+            <label class="chip"><input type="radio" name="suite" id="sEarth" value="Earth View Suite" checked><span>Earth View</span></label>
+            <label class="chip"><input type="radio" name="suite" id="sHorizon" value="Horizon Loft"><span>Horizon Loft</span></label>
+            <label class="chip"><input type="radio" name="suite" id="sDome" value="Deep Field Dome"><span>Deep Field Dome</span></label>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>When would you fly?</legend>
+          <div class="chips">
+            <label class="chip"><input type="radio" name="when" id="w1" value="As soon as possible" checked><span>As soon as possible</span></label>
+            <label class="chip"><input type="radio" name="when" id="w2" value="In 1–2 years"><span>In 1–2 years</span></label>
+            <label class="chip"><input type="radio" name="when" id="w3" value="Just dreaming"><span>Just dreaming</span></label>
+          </div>
+        </fieldset>
+        <p class="form-err" id="wErr" role="alert"></p>
+        <button class="btn btn-primary magnet" type="submit">Join the waitlist</button>
+        <p class="form-done" id="wDone" tabindex="-1" hidden></p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap foot">
+    <span>© 2026 Halo Orbital · A fictional concept</span>
+    <span>Motion demo by The Academy · <a href="#top">Back to top</a></span>
+  </div>
+</footer>
+
+<div class="mbar"><a class="btn btn-primary" href="#reserve">Join the waitlist</a></div>
+
+<script>
+/* Base behavior: works without any animation library */
+(function () {
+  var f = document.getElementById("waitlist");
+  f.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var n = document.getElementById("wName"), m = document.getElementById("wEmail"), err = document.getElementById("wErr");
+    [n, m].forEach(function (x) { x.removeAttribute("aria-invalid"); });
+    if (!n.value.trim()) { err.textContent = "Add your name."; n.setAttribute("aria-invalid", "true"); n.focus(); return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(m.value.trim())) { err.textContent = "Check your email address."; m.setAttribute("aria-invalid", "true"); m.focus(); return; }
+    err.textContent = "";
+    var suite = f.querySelector('input[name="suite"]:checked').value, when = f.querySelector('input[name="when"]:checked').value;
+    var done = document.getElementById("wDone");
+    done.textContent = "You're on the list, " + n.value.trim().split(" ")[0] + ": " + suite + ", " + when.toLowerCase() + ". (Concept demo, nothing was sent.)";
+    done.hidden = false; done.focus();
+    f.querySelector('button[type="submit"]').disabled = true;
+  });
+})();
+</script>
+<script defer src="../lib/lenis-1.3.27/lenis.min.js"></script>
+<script defer src="../lib/gsap-3.15.1/gsap.min.js"></script>
+<script defer src="../lib/gsap-3.15.1/ScrollTrigger.min.js"></script>
+<script defer src="../lib/gsap-3.15.1/SplitText.min.js"></script>
+<script defer src="../lib/gsap-3.15.1/ScrambleTextPlugin.min.js"></script>
+<script defer src="../lib/gsap-3.15.1/ScrollToPlugin.min.js"></script>
+<script>
+/* Motion layer: progressive enhancement only (see motion-standards.md).
+   Effects adapted from React Bits (reactbits.dev), MIT + Commons Clause: ScrollReveal, SpotlightCard, Magnet, CountUp, ScrollVelocity, DecryptedText. */
+window.addEventListener("load", function () {
+  var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var fine = matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+  // Spotlight cards and magnet buttons: pointer-only, harmless without GSAP
+  if (fine && !reduce) {
+    document.querySelectorAll(".spot").forEach(function (c) {
+      c.addEventListener("pointermove", function (e) {
+        var r = c.getBoundingClientRect();
+        c.style.setProperty("--x", (e.clientX - r.left) + "px");
+        c.style.setProperty("--y", (e.clientY - r.top) + "px");
+      });
+    });
+  }
+
+  if (reduce || !window.gsap || !window.ScrollTrigger) return;
+  gsap.registerPlugin(ScrollTrigger);
+  ["SplitText", "ScrambleTextPlugin", "ScrollToPlugin"].forEach(function (n) { if (window[n]) gsap.registerPlugin(window[n]); });
+
+  // 1. Smooth scroll
+  var lenis = window.Lenis ? new Lenis({ syncTouch: false, lerp: 0.09 }) : null;
+  if (lenis) {
+    lenis.on("scroll", ScrollTrigger.update);
+    gsap.ticker.add(function (t) { lenis.raf(t * 1000); });
+    gsap.ticker.lagSmoothing(0);
+    document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+      a.addEventListener("click", function (e) {
+        var id = a.getAttribute("href"); var el = id.length > 1 && document.querySelector(id);
+        if (!el) return; e.preventDefault();
+        lenis.scrollTo(el, { offset: -70, duration: 1.4 });
+        if (id === "#reserve") setTimeout(function () { document.getElementById("wName").focus({ preventScroll: true }); }, 1400);
+      });
+    });
+  }
+
+  // 2. Hero: decrypting label + headline rising word by word
+  var lab = document.querySelector("[data-scramble]");
+  if (lab && window.ScrambleTextPlugin) {
+    gsap.to(lab, { duration: 1.8, scrambleText: { text: lab.textContent, chars: "01<>/#*+", speed: 0.6, revealDelay: 0.2 } });
+  }
+  var h = document.querySelector("[data-split]");
+  if (h && window.SplitText) {
+    var split = SplitText.create(h, { type: "words", mask: "words", aria: "auto" });
+    gsap.from(split.words, { yPercent: 115, rotate: 4, duration: 1, stagger: 0.08, ease: "expo.out", delay: 0.15 });
+  }
+  gsap.from(".hero .lede, .hero-actions, .coords", { autoAlpha: 0, y: 24, duration: 0.9, stagger: 0.12, ease: "power3.out", delay: 0.55 });
+
+  // 3. Statement: words brighten as you scroll through it
+  var st = document.querySelector("[data-scrub]");
+  if (st && window.SplitText) {
+    var ws = SplitText.create(st, { type: "words", aria: "auto" });
+    gsap.fromTo(ws.words, { opacity: 0.16 }, { opacity: 1, stagger: 0.05, ease: "none",
+      scrollTrigger: { trigger: st, start: "top 80%", end: "bottom 45%", scrub: true } });
+  }
+
+  // 4. Velocity marquee: speeds up and skews with scroll speed
+  var mq = document.querySelector("[data-velocity]");
+  if (mq) {
+    var skew = gsap.quickTo(mq, "skewX", { duration: 0.4, ease: "power3" });
+    ScrollTrigger.create({ onUpdate: function (self) {
+      var v = gsap.utils.clamp(-12, 12, self.getVelocity() / -250);
+      skew(v);
+      mq.firstElementChild.style.animationDuration = (30 / (1 + Math.min(Math.abs(self.getVelocity()) / 1500, 3))) + "s";
+    } });
+  }
+
+  // 5. Journey: pinned horizontal scroll on desktop, staggered reveal on phones
+  var mm = gsap.matchMedia();
+  mm.add("(min-width: 900px)", function () {
+    var sec = document.querySelector(".journey"), track = sec.querySelector(".track");
+    sec.classList.add("is-pinned");
+    var dist = function () { return Math.max(0, track.scrollWidth - track.parentElement.clientWidth); };
+    var tw = gsap.to(track, { x: function () { return -dist(); }, ease: "none",
+      scrollTrigger: { trigger: sec, start: "top top", end: function () { return "+=" + dist(); }, pin: true, scrub: 0.8, invalidateOnRefresh: true } });
+    gsap.utils.toArray(".stage").forEach(function (s) {
+      gsap.from(s.querySelector(".tmark"), { xPercent: 40, ease: "none", scrollTrigger: { trigger: s, containerAnimation: tw, start: "left right", end: "right left", scrub: true } });
+    });
+    return function () { sec.classList.remove("is-pinned"); };
+  });
+
+  // 6. Reveals for everything below the fold
+  gsap.utils.toArray(".sec-head, .spot, .numbers, form.waitlist, .stage").forEach(function (el) {
+    if (el.getBoundingClientRect().top < innerHeight * 0.9) return;
+    if (el.classList.contains("stage") && document.querySelector(".journey.is-pinned")) return;
+    gsap.from(el, { autoAlpha: 0, y: 28, duration: 0.8, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 90%", once: true } });
+  });
+
+  // 7. Count up to the real numbers already in the page
+  gsap.utils.toArray("[data-count]").forEach(function (el) {
+    var end = +el.getAttribute("data-count"), o = { v: 0 };
+    ScrollTrigger.create({ trigger: el, start: "top 90%", once: true, onEnter: function () {
+      gsap.fromTo(o, { v: 0 }, { v: end, duration: 1.6, ease: "power2.out", onUpdate: function () { el.textContent = Math.round(o.v).toLocaleString(); } });
+    } });
+  });
+
+  // 8. Magnet buttons
+  if (fine) {
+    document.querySelectorAll(".magnet").forEach(function (b) {
+      var xTo = gsap.quickTo(b, "x", { duration: 0.5, ease: "elastic.out(1, 0.4)" }), yTo = gsap.quickTo(b, "y", { duration: 0.5, ease: "elastic.out(1, 0.4)" });
+      b.addEventListener("pointermove", function (e) { var r = b.getBoundingClientRect(); xTo((e.clientX - r.left - r.width / 2) * 0.25); yTo((e.clientY - r.top - r.height / 2) * 0.35); });
+      b.addEventListener("pointerleave", function () { xTo(0); yTo(0); });
+    });
+  }
+
+  // 9. Vanta NET behind the hero: desktop with a mouse only
+  var bg = document.querySelector("[data-vanta]"), fx = null, big = matchMedia("(min-width: 900px) and (hover: hover)");
+  function loadScript(src) { return new Promise(function (ok, no) { var s = document.createElement("script"); s.src = src; s.onload = ok; s.onerror = no; document.head.appendChild(s); }); }
+  function startVanta() {
+    if (!bg || fx || !big.matches) return;
+    (window.THREE ? Promise.resolve() : loadScript("../lib/three-0.134.0/three.min.js"))
+      .then(function () { return window.VANTA && VANTA.NET ? null : loadScript("../lib/vanta-0.5.24/vanta.net.min.js"); })
+      .then(function () {
+        if (fx || !big.matches) return;
+        fx = VANTA.NET({ el: bg, THREE: window.THREE, mouseControls: true, touchControls: false, gyroControls: false,
+          color: 0x5cf2ff, backgroundColor: 0x05070d, points: 11, maxDistance: 22, spacing: 17, showDots: true });
+      }).catch(function () {});
+  }
+  function stopVanta() { if (fx) { fx.destroy(); fx = null; } }
+  startVanta();
+  big.addEventListener("change", function () { big.matches ? startVanta() : stopVanta(); });
+});
+</script>
+</body>
+</html>
