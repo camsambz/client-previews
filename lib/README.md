@@ -11,3 +11,5 @@ Rules for using them: see `motion-standards.md` in the WEBSITE AUTOMATION projec
 | `three-0.134.0/` | https://github.com/mrdoob/three.js (npm `three@0.134.0`, the version Vanta is built for) | MIT, see `three-0.134.0/LICENSE` |
 
 React Bits (https://github.com/DavidHDev/react-bits) is used as a reference only. Its license (MIT + Commons Clause) allows its effects inside a website but not redistributing the components, so it is not copied here; effects are rebuilt inside the client site that uses them.
+
+- `funmode-1.0/` — Fun Mode, an opt-in arcade mini game for client sites. Original code by The Academy; no third-party code.

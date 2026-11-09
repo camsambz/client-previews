@@ -63,6 +63,8 @@ p { margin: 0; }
 .concept b { color: var(--ink); font-weight: 600; }
 
 /* Header */
+.top-actions { display: flex; align-items: center; gap: 10px; }
+.fun-toggle { color: var(--muted); }
 header.top { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(14px) saturate(1.3); background: rgba(5, 7, 13, .62); border-bottom: 1px solid var(--line); }
 .top-row { display: flex; align-items: center; gap: 18px; padding-block: 10px; }
 .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); margin-right: auto; min-height: 44px; }
@@ -218,7 +220,10 @@ footer.site { border-top: 1px solid var(--line); padding-block: 48px 120px; colo
       <a href="#numbers">By the numbers</a>
       <a href="#reserve">Waitlist</a>
     </nav>
-    <a class="btn btn-primary btn-sm magnet" href="#reserve">Join the waitlist</a>
+    <div class="top-actions">
+      <button id="funToggle" class="fun-toggle" type="button" hidden>Fun mode</button>
+      <a class="btn btn-primary btn-sm magnet" href="#reserve">Join the waitlist</a>
+    </div>
   </div>
 </header>
 
@@ -498,6 +503,32 @@ window.addEventListener("load", function () {
   function stopVanta() { if (fx) { fx.destroy(); fx = null; } }
   startVanta();
   big.addEventListener("change", function () { big.matches ? startVanta() : stopVanta(); });
+});
+</script>
+<script defer src="../lib/funmode-1.0/funmode.js"></script>
+<script>
+/* Fun mode: opt-in mini game, desktop with a mouse only. Off unless the visitor flips the switch. */
+window.addEventListener("load", function () {
+  if (!window.FunMode) return;
+  FunMode.init({
+    toggle: "#funToggle",
+    theme: {
+      accent: "#5cf2ff", accent2: "#ff8a5c", ink: "#e8eefc", panel: "rgba(5,7,13,.92)",
+      font: "'JetBrains Mono', ui-monospace, monospace",
+      title: "Clear the orbit",
+      storageKey: "halo-funmode-hi",
+      enemies: [
+        { label: "SPACE JUNK", points: 10, hp: 1, scale: 4, sprite: [
+          "..##.....##..", "...#######...", "..##.###.##..", "#############", "#.#########.#", "#.#.......#.#", "...##...##..." ] },
+        { label: "DEAD SAT", points: 15, hp: 2, scale: 4, sprite: [
+          "###...#...###", "###..###..###", "###########.#", "###..###..###", "###...#...###" ] },
+        { label: "BOLT", points: 5, hp: 1, scale: 4, sprite: [
+          ".###.", "#####", "##.##", "#####", ".###." ] }
+      ],
+      boss: { label: "SOLAR FLARE", points: 80, hp: 6, scale: 6, sprite: [
+        "......#......", "..#...#...#..", "...#.###.#...", "....#####....", "#.#########.#", "....#####....", "...#.###.#...", "..#...#...#..", "......#......" ] }
+    }
+  });
 });
 </script>
 </body>
