@@ -225,6 +225,48 @@ footer.site a:hover{color:var(--ember)}
 .toast b{color:var(--ember)}
 
 
+
+/* hero layout with the RedTail particle */
+.hero-inner{display:grid;grid-template-columns:minmax(0,1.04fr) minmax(0,.96fr);gap:40px;align-items:center}
+.hero-copy{position:relative;z-index:2}
+.hero-figure{position:relative;z-index:2;display:grid;place-items:center;min-height:min(60vh,540px)}
+.cell-stage{position:relative;width:min(100%,470px);aspect-ratio:1}
+.cell-stage canvas{position:absolute;inset:0;width:100%!important;height:100%!important;display:block}
+.cell-css{position:absolute;inset:10%;border-radius:50%;transition:opacity .9s ease;
+  background:
+    radial-gradient(circle at 34% 30%,rgba(214,244,255,.95),rgba(126,206,233,.5) 26%,rgba(18,74,112,.55) 46%,rgba(8,42,70,.92) 62%),
+    radial-gradient(circle at 50% 50%,transparent 58%,rgba(167,221,244,.2) 63%,transparent 71%);
+  box-shadow:0 0 90px -10px rgba(62,193,201,.5),inset 0 0 70px rgba(10,44,72,.95),inset 0 0 26px rgba(214,244,255,.45)}
+.cell-css::after{content:"";position:absolute;inset:-8%;border-radius:50%;border:1px solid rgba(167,221,244,.2);
+  background:radial-gradient(circle at 50% 50%,transparent 64%,rgba(120,180,214,.12) 78%,transparent 86%)}
+.cell-stage.live .cell-css{opacity:0}
+.hot{position:absolute;font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--text);background:rgba(7,36,61,.88);border:1px solid var(--line);border-radius:999px;padding:6px 11px;
+  white-space:nowrap;opacity:0;transform:translateY(6px);transition:opacity .35s,transform .35s;pointer-events:none}
+.hot::before{content:"";position:absolute;left:-16px;top:50%;width:12px;height:1px;background:var(--cell)}
+.hot[data-hot="env"]{left:84%;top:12%}
+.hot[data-hot="cd55"]{left:92%;top:44%}
+.hot[data-hot="pay"]{left:74%;top:84%;border-color:rgba(255,107,51,.5)}
+.hot[data-hot="pay"]::before{background:var(--ember)}
+.cell-stage.live:hover .hot{opacity:1;transform:translateY(0)}
+.cell-stage.live:hover .hot[data-hot="cd55"]{transition-delay:.08s}
+.cell-stage.live:hover .hot[data-hot="pay"]{transition-delay:.16s}
+
+/* scroll progress */
+.progress{position:absolute;left:0;right:0;bottom:-1px;height:2px;overflow:hidden}
+.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--cell),var(--ember));box-shadow:0 0 12px rgba(255,107,51,.6)}
+
+/* band transitions: sections rise over the one before */
+.band.light{border-radius:34px 34px 0 0;margin-top:-34px;position:relative;z-index:2}
+footer.site{border-radius:34px 34px 0 0;margin-top:-34px;position:relative;z-index:4}
+
+@media (max-width:1040px){
+  .hero-inner{grid-template-columns:1fr;gap:28px}
+  .hero-figure{min-height:0;order:2}
+  .cell-stage{width:min(74vw,340px)}
+  .hot{display:none}
+}
+
 /* pointer-reactive layer (desktop, fine pointer, motion allowed) */
 .hero-glow{position:absolute;inset:0;z-index:3;pointer-events:none;opacity:0;transition:opacity .5s;
   background:radial-gradient(360px circle at var(--mx,50%) var(--my,50%),rgba(255,107,51,.22),rgba(62,193,201,.10) 42%,transparent 66%)}
@@ -305,6 +347,7 @@ footer.site a:hover{color:var(--ember)}
       <svg width="20" height="14" viewBox="0 0 20 14" aria-hidden="true"><path d="M0 1h20M0 7h20M0 13h20" stroke="currentColor" stroke-width="2"/></svg>
     </button>
   </div>
+  <div class="progress" aria-hidden="true"><span id="progFill"></span></div>
 </header>
 
 <main id="main">
@@ -314,13 +357,14 @@ footer.site a:hover{color:var(--ember)}
      data-seo-title="Systemic Genetic Medicine for Cancer | Calidi"
      data-description="Calidi Biotherapeutics is a clinical-stage company engineering RedTail enveloped virotherapy to deliver genetic medicines systemically to solid tumors.">
   <section class="hero">
-    <div class="hero-bg" data-vanta="cells" aria-hidden="true">
+    <div class="hero-bg" aria-hidden="true">
       <div class="hero-fallback"></div>
       <div class="hero-grid"></div>
     </div>
     <div class="hero-shade" aria-hidden="true"></div>
     <div class="hero-glow" aria-hidden="true"></div>
-    <div class="wrap">
+    <div class="wrap hero-inner">
+     <div class="hero-copy">
       <p class="eyebrow" data-scramble>Clinical-stage · San Diego, California</p>
       <h1 data-split>Genetic medicine engineered to reach <span class="accent">every tumor site.</span></h1>
       <p class="lede">Calidi Biotherapeutics engineers enveloped virotherapy and stem cell–based immunotherapies designed to deliver genetic medicines through the bloodstream and express them inside solid tumors and metastatic disease.</p>
@@ -334,6 +378,15 @@ footer.site a:hover{color:var(--ember)}
         <span><b>NeuroNova</b> · Phase 2</span>
         <span><b>SuperNova</b> · Phase 1</span>
       </p>
+     </div>
+     <div class="hero-figure">
+       <div class="cell-stage" id="cellStage">
+         <div class="cell-css" aria-hidden="true"></div>
+         <span class="hot" data-hot="env">Envelope</span>
+         <span class="hot" data-hot="cd55">CD55</span>
+         <span class="hot" data-hot="pay">IL-15 payload</span>
+       </div>
+     </div>
     </div>
   </section>
 
@@ -976,6 +1029,7 @@ footer.site a:hover{color:var(--ember)}
   steps.forEach(function (s) {
     s.addEventListener("click", function () { setStep(+s.getAttribute("data-step")); });
   });
+  window.__setStep = setStep;
 
   /* pipeline filters */
   var chips = document.querySelectorAll(".chip");
@@ -1023,9 +1077,10 @@ window.addEventListener("load", function () {
   function setupReveals() {
     gsap.utils.toArray(".view:not([hidden]) [data-reveal]").forEach(function (el) {
       if (done.has(el)) return; done.add(el);
+      if (el.closest(".grid")) return;                 // the grid stagger handles those
       if (el.getBoundingClientRect().top < innerHeight * 0.92) return;
       gsap.from(el, { autoAlpha: 0, y: 22, duration: .75, ease: "power2.out",
-        scrollTrigger: { trigger: el, start: "top 90%", once: true } });
+        scrollTrigger: { trigger: el, start: "top bottom-=40", once: true } });
     });
     ScrollTrigger.refresh();
   }
@@ -1140,32 +1195,326 @@ window.addEventListener("load", function () {
     });
   }
 
-  /* desktop-only Vanta CELLS behind the hero */
-  var bg = document.querySelector("[data-vanta]");
-  var big = matchMedia("(min-width: 900px) and (hover: hover)");
-  var fx = null;
-  function loadScript(src) { return new Promise(function (ok, no) { var s = document.createElement("script"); s.src = src; s.onload = ok; s.onerror = no; document.head.appendChild(s); }); }
-  function startVanta() {
-    if (!bg || fx || !big.matches) return;
-    loadScript("../lib/three-0.134.0/three.min.js")
-      .then(function () { return loadScript("../lib/vanta-0.5.24/vanta.cells.min.js"); })
-      .then(function () {
-        fx = VANTA.CELLS({ el: bg, THREE: window.THREE, mouseControls: true, touchControls: false, gyroControls: false,
-          minHeight: 200, minWidth: 200, scale: 1, color1: 0x0b0f16, color2: 0x8e2411, size: 3.4, speed: .62 });
-      })
-      .catch(function () {});
+  /* ---- scroll choreography ---- */
+
+  /* 1. progress bar across the top */
+  var fill = document.getElementById("progFill");
+  if (fill) ScrollTrigger.create({
+    start: 0, end: "max",
+    onUpdate: function (self) { fill.style.width = (self.progress * 100).toFixed(2) + "%"; }
+  });
+
+  /* 2. the hero scrolls away: copy lifts and fades, the particle sinks behind it */
+  var heroCopy = document.querySelector(".hero-copy"), heroFig = document.querySelector(".hero-figure");
+  if (heroCopy) gsap.to(heroCopy, {
+    y: -70, autoAlpha: 0, ease: "none",
+    scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom 30%", scrub: .6 }
+  });
+  if (heroFig) gsap.to(heroFig, {
+    y: 40, scale: .9, autoAlpha: 0, ease: "none",
+    scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom 20%", scrub: .6 }
+  });
+
+  /* 3. section headings drift as they pass */
+  gsap.utils.toArray(".view:not([hidden]) .sec-head").forEach(function (el) {
+    gsap.fromTo(el, { y: 34 }, {
+      y: -34, ease: "none",
+      scrollTrigger: { trigger: el, start: "top bottom", end: "bottom top", scrub: .8 }
+    });
+  });
+
+  /* 4. cards rise in sequence rather than all at once */
+  gsap.utils.toArray(".view:not([hidden]) .grid").forEach(function (g) {
+    var kids = g.children;
+    if (!kids.length) return;
+    gsap.from(kids, {
+      y: 46, autoAlpha: 0, duration: .8, stagger: .09, ease: "power3.out",
+      scrollTrigger: { trigger: g, start: "top bottom-=40", once: true }
+    });
+  });
+
+  /* 5. the RedTail steps advance themselves as you scroll the science page */
+  var mech = document.querySelector(".mech");
+  if (mech) {
+    var current = 1;
+    ScrollTrigger.create({
+      trigger: mech, start: "top 62%", end: "bottom 75%", scrub: true,
+      onUpdate: function (self) {
+        var n = Math.min(6, Math.max(1, Math.floor(self.progress * 6) + 1));
+        if (n !== current) { current = n; window.__setStep && window.__setStep(n); }
+      }
+    });
   }
-  function stopVanta() { if (fx) { fx.destroy(); fx = null; } }
-  startVanta();
-  big.addEventListener("change", function () { big.matches ? startVanta() : stopVanta(); });
+
+  /* 6. pipeline tracks fill as each row arrives */
+  gsap.utils.toArray(".track-fill").forEach(function (f) {
+    var w = f.style.getPropertyValue("--w") || "10%";
+    gsap.fromTo(f, { width: "0%" }, {
+      width: w, duration: 1.1, ease: "power2.out",
+      scrollTrigger: { trigger: f, start: "top 92%", once: true }
+    });
+  });
+
+  /* 7. the footer eases up into place */
+  gsap.from("footer.site .foot-grid", {
+    y: 40, autoAlpha: 0, duration: .9, ease: "power3.out",
+    scrollTrigger: { trigger: "footer.site", start: "top 92%", once: true }
+  });
+
+  /* safety net: if anything is still faded while it sits in the viewport, show it */
+  function rescue() {
+    document.querySelectorAll(".view:not([hidden]) [data-reveal], .view:not([hidden]) .grid > *").forEach(function (el) {
+      var r = el.getBoundingClientRect();
+      if (r.bottom < 40 || r.top > innerHeight - 40) return;
+      if (parseFloat(getComputedStyle(el).opacity) < 0.05) gsap.set(el, { autoAlpha: 1, y: 0 });
+    });
+  }
+  var rescueTick = false;
+  addEventListener("scroll", function () {
+    if (rescueTick) return; rescueTick = true;
+    requestAnimationFrame(function () { rescue(); rescueTick = false; });
+  }, { passive: true });
 
   setupReveals();
+  setTimeout(function () { ScrollTrigger.refresh(); rescue(); }, 600);
   window.addEventListener("viewchange", function (e) {
     if (lenis) lenis.scrollTo(0, { immediate: true });
-    if (e.detail === "home") startVanta(); else stopVanta();
-    requestAnimationFrame(setupReveals);
+    requestAnimationFrame(function () { setupReveals(); ScrollTrigger.refresh(); rescue(); });
   });
 });
 </script>
+<script>
+/* ---------- RedTail particle: real-time WebGL cell, desktop with a mouse only ----------
+   Simplex noise GLSL by Ian McEwan / Ashima Arts (MIT). Everything else original. */
+window.addEventListener("load", function () {
+  var stage = document.getElementById("cellStage");
+  if (!stage) return;
+  var big = matchMedia("(min-width: 1041px) and (hover: hover) and (pointer: fine)");
+  var reduce = matchMedia("(prefers-reduced-motion: reduce)");
+  var ctx = null;
+
+  function loadScript(src) {
+    return new Promise(function (ok, no) {
+      if (window.THREE) return ok();
+      var s = document.createElement("script"); s.src = src; s.onload = ok; s.onerror = no;
+      document.head.appendChild(s);
+    });
+  }
+
+  var NOISE = [
+    "vec3 mod289(vec3 x){return x-floor(x*(1.0/289.0))*289.0;}",
+    "vec4 mod289(vec4 x){return x-floor(x*(1.0/289.0))*289.0;}",
+    "vec4 permute(vec4 x){return mod289(((x*34.0)+1.0)*x);}",
+    "vec4 taylorInvSqrt(vec4 r){return 1.79284291400159-0.85373472095314*r;}",
+    "float snoise(vec3 v){",
+    " const vec2 C=vec2(1.0/6.0,1.0/3.0); const vec4 D=vec4(0.0,0.5,1.0,2.0);",
+    " vec3 i=floor(v+dot(v,C.yyy)); vec3 x0=v-i+dot(i,C.xxx);",
+    " vec3 g=step(x0.yzx,x0.xyz); vec3 l=1.0-g; vec3 i1=min(g.xyz,l.zxy); vec3 i2=max(g.xyz,l.zxy);",
+    " vec3 x1=x0-i1+C.xxx; vec3 x2=x0-i2+C.yyy; vec3 x3=x0-D.yyy;",
+    " i=mod289(i);",
+    " vec4 p=permute(permute(permute(i.z+vec4(0.0,i1.z,i2.z,1.0))+i.y+vec4(0.0,i1.y,i2.y,1.0))+i.x+vec4(0.0,i1.x,i2.x,1.0));",
+    " float n_=0.142857142857; vec3 ns=n_*D.wyz-D.xzx;",
+    " vec4 j=p-49.0*floor(p*ns.z*ns.z); vec4 x_=floor(j*ns.z); vec4 y_=floor(j-7.0*x_);",
+    " vec4 x=x_*ns.x+ns.yyyy; vec4 y=y_*ns.x+ns.yyyy; vec4 h=1.0-abs(x)-abs(y);",
+    " vec4 b0=vec4(x.xy,y.xy); vec4 b1=vec4(x.zw,y.zw);",
+    " vec4 s0=floor(b0)*2.0+1.0; vec4 s1=floor(b1)*2.0+1.0; vec4 sh=-step(h,vec4(0.0));",
+    " vec4 a0=b0.xzyw+s0.xzyw*sh.xxyy; vec4 a1=b1.xzyw+s1.xzyw*sh.zzww;",
+    " vec3 p0=vec3(a0.xy,h.x); vec3 p1=vec3(a0.zw,h.y); vec3 p2=vec3(a1.xy,h.z); vec3 p3=vec3(a1.zw,h.w);",
+    " vec4 norm=taylorInvSqrt(vec4(dot(p0,p0),dot(p1,p1),dot(p2,p2),dot(p3,p3)));",
+    " p0*=norm.x; p1*=norm.y; p2*=norm.z; p3*=norm.w;",
+    " vec4 m=max(0.6-vec4(dot(x0,x0),dot(x1,x1),dot(x2,x2),dot(x3,x3)),0.0); m=m*m;",
+    " return 42.0*dot(m*m,vec4(dot(p0,x0),dot(p1,x1),dot(p2,x2),dot(p3,x3)));}"
+  ].join("\n");
+
+  function build() {
+    var T = window.THREE;
+    var scene = new T.Scene();
+    var cam = new T.PerspectiveCamera(36, 1, 0.1, 100); cam.position.set(0, 0, 6.5);
+    var renderer = new T.WebGLRenderer({ alpha: true, antialias: true });
+    renderer.setClearColor(0x000000, 0);
+    renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
+    stage.appendChild(renderer.domElement);
+
+    var group = new T.Group(); scene.add(group);
+
+    /* 1. the viral core: a noisy, slowly breathing body with an icy rim */
+    var coreMat = new T.ShaderMaterial({
+      transparent: true,
+      uniforms: { uTime: { value: 0 }, uDeep: { value: new T.Color(0x0b3b60) }, uIce: { value: new T.Color(0xd6f4ff) }, uTeal: { value: new T.Color(0x3ec1c9) } },
+      vertexShader: NOISE + [
+        "uniform float uTime; varying float vN; varying vec3 vNormalW; varying vec3 vViewW;",
+        "void main(){",
+        " float n = snoise(normal*2.3 + uTime*0.16)*0.5 + snoise(normal*5.1 - uTime*0.1)*0.22;",
+        " vN = n;",
+        " vec3 pos = position + normal * n * 0.13;",
+        " vec4 wp = modelMatrix * vec4(pos,1.0);",
+        " vNormalW = normalize(mat3(modelMatrix) * normal);",
+        " vViewW = normalize(cameraPosition - wp.xyz);",
+        " gl_Position = projectionMatrix * viewMatrix * wp;}"
+      ].join("\n"),
+      fragmentShader: [
+        "uniform vec3 uDeep; uniform vec3 uIce; uniform vec3 uTeal; varying float vN; varying vec3 vNormalW; varying vec3 vViewW;",
+        "void main(){",
+        " float f = pow(1.0 - max(dot(vNormalW, vViewW), 0.0), 2.2);",     /* rim */
+        " float veins = smoothstep(0.08, 0.34, vN);",
+        " vec3 col = mix(uDeep, uTeal, veins*0.55);",
+        " col = mix(col, uIce, f*0.92);",
+        " gl_FragColor = vec4(col, 0.82 + f*0.18);}"
+      ].join("\n")
+    });
+    var core = new T.Mesh(new T.IcosahedronGeometry(1.05, 5), coreMat);
+    group.add(core);
+
+    /* 2. the human-derived envelope: a glass shell around it */
+    var envMat = new T.ShaderMaterial({
+      transparent: true, side: T.DoubleSide, depthWrite: false, blending: T.AdditiveBlending,
+      uniforms: { uTime: { value: 0 }, uTint: { value: new T.Color(0x9fd8ea) } },
+      vertexShader: [
+        "uniform float uTime; varying vec3 vNormalW; varying vec3 vViewW;",
+        "void main(){ vec4 wp = modelMatrix * vec4(position,1.0);",
+        " vNormalW = normalize(mat3(modelMatrix)*normal); vViewW = normalize(cameraPosition - wp.xyz);",
+        " gl_Position = projectionMatrix * viewMatrix * wp;}"
+      ].join("\n"),
+      fragmentShader: [
+        "uniform vec3 uTint; varying vec3 vNormalW; varying vec3 vViewW;",
+        "void main(){ float f = pow(1.0 - abs(dot(vNormalW, vViewW)), 3.0);",
+        " gl_FragColor = vec4(uTint, f*0.5);}"
+      ].join("\n")
+    });
+    var envelope = new T.Mesh(new T.SphereGeometry(1.46, 64, 64), envMat);
+    group.add(envelope);
+
+    /* 3. CD55 proteins studded over the envelope, on a fibonacci sphere */
+    var spikes = new T.Group(); group.add(spikes);
+    var pinGeo = new T.CylinderGeometry(0.018, 0.03, 0.2, 6);
+    var capGeo = new T.SphereGeometry(0.055, 12, 12);
+    var pinMat = new T.MeshBasicMaterial({ color: 0x7fd4e4, transparent: true, opacity: 0.75 });
+    var capMat = new T.MeshBasicMaterial({ color: 0xd9f6ff, transparent: true, opacity: 0.95 });
+    var N = 34, golden = Math.PI * (3 - Math.sqrt(5));
+    for (var i = 0; i < N; i++) {
+      var y = 1 - (i / (N - 1)) * 2, r = Math.sqrt(Math.max(0, 1 - y * y)), th = golden * i;
+      var dir = new T.Vector3(Math.cos(th) * r, y, Math.sin(th) * r).normalize();
+      var pin = new T.Mesh(pinGeo, pinMat), cap = new T.Mesh(capGeo, capMat);
+      pin.position.copy(dir).multiplyScalar(1.54);
+      cap.position.copy(dir).multiplyScalar(1.66);
+      pin.quaternion.setFromUnitVectors(new T.Vector3(0, 1, 0), dir);
+      spikes.add(pin); spikes.add(cap);
+    }
+
+    /* 4. the payload carried inside */
+    var payloads = new T.Group(); group.add(payloads);
+    var payGeo = new T.SphereGeometry(0.15, 20, 20);
+    var payMat = new T.MeshBasicMaterial({ color: 0xff7d45, transparent: true, opacity: .95, depthTest: false });
+    var haloGeo = new T.SphereGeometry(0.27, 20, 20);
+    var haloMat = new T.MeshBasicMaterial({ color: 0xe95b24, transparent: true, opacity: 0.3, blending: T.AdditiveBlending, depthWrite: false, depthTest: false });
+    var seeds = [[0.42, 0.34, 0.2], [-0.38, -0.3, 0.34], [0.1, -0.12, -0.5]];
+    seeds.forEach(function (sd, k) {
+      var holder = new T.Group();
+      var m = new T.Mesh(payGeo, payMat), h = new T.Mesh(haloGeo, haloMat);
+      holder.add(m); holder.add(h);
+      holder.position.set(sd[0], sd[1], sd[2]);
+      holder.userData.phase = k * 2.1;
+      payloads.add(holder);
+    });
+    payloads.renderOrder = 3;
+
+    /* 5. free particles drifting around the envelope */
+    var COUNT = 260, pos = new Float32Array(COUNT * 3), col = new Float32Array(COUNT * 3), seedsArr = [];
+    var cTeal = new T.Color(0x6fd8e4), cEmber = new T.Color(0xff8a52);
+    for (var j = 0; j < COUNT; j++) {
+      var rad = 1.8 + Math.random() * 1.5, a = Math.random() * Math.PI * 2, b = Math.acos(2 * Math.random() - 1);
+      seedsArr.push({ r: rad, a: a, b: b, sp: 0.06 + Math.random() * 0.16 });
+      var c = Math.random() < 0.26 ? cEmber : cTeal;
+      col[j * 3] = c.r; col[j * 3 + 1] = c.g; col[j * 3 + 2] = c.b;
+    }
+    var pGeo = new T.BufferGeometry();
+    pGeo.setAttribute("position", new T.BufferAttribute(pos, 3));
+    pGeo.setAttribute("color", new T.BufferAttribute(col, 3));
+    var points = new T.Points(pGeo, new T.PointsMaterial({ size: 0.035, vertexColors: true, transparent: true, opacity: 0.85, blending: T.AdditiveBlending, depthWrite: false }));
+    group.add(points);
+
+    function resize() {
+      var r = stage.getBoundingClientRect(), w = Math.max(1, r.width), h = Math.max(1, r.height);
+      renderer.setSize(w, h, false); cam.aspect = w / h; cam.updateProjectionMatrix();
+    }
+    resize();
+    var ro = new ResizeObserver(resize); ro.observe(stage);
+
+    /* pointer and scroll response */
+    var tx = 0, ty = 0, rx = 0, ry = 0, scrollSkew = 0;
+    function onMove(e) {
+      var r = stage.getBoundingClientRect();
+      tx = ((e.clientX - (r.left + r.width / 2)) / innerWidth) * 1.1;
+      ty = ((e.clientY - (r.top + r.height / 2)) / innerHeight) * 0.8;
+    }
+    window.addEventListener("pointermove", onMove);
+    function onScroll() { scrollSkew = Math.min(1, scrollY / Math.max(1, innerHeight)); }
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    var visible = true;
+    var io = new IntersectionObserver(function (es) { visible = es[0].isIntersecting; }, { threshold: 0.02 });
+    io.observe(stage);
+
+    var clock = new T.Clock(), raf = 0;
+    function tick() {
+      raf = requestAnimationFrame(tick);
+      if (!visible || document.hidden) return;
+      var t = clock.getElapsedTime();
+      coreMat.uniforms.uTime.value = t;
+
+      ry += (tx - ry) * 0.045; rx += (ty - rx) * 0.045;
+      group.rotation.y = t * 0.1 + ry;
+      group.rotation.x = rx * 0.9;
+      group.position.y = Math.sin(t * 0.55) * 0.045 - scrollSkew * 0.5;
+      group.scale.setScalar(1 - scrollSkew * 0.12);
+      spikes.rotation.y = -t * 0.04;
+      envelope.scale.setScalar(1 + Math.sin(t * 0.7) * 0.012);
+
+      payloads.children.forEach(function (h, k) {
+        var ph = h.userData.phase + t * 0.6;
+        h.position.y = seeds[k][1] + Math.sin(ph) * 0.09;
+        h.position.x = seeds[k][0] + Math.cos(ph * 0.8) * 0.07;
+        h.scale.setScalar(1 + Math.sin(ph * 1.6) * 0.07);
+      });
+
+      var arr = pGeo.attributes.position.array;
+      for (var j = 0; j < COUNT; j++) {
+        var s = seedsArr[j], ang = s.a + t * s.sp, rr = s.r + Math.sin(t * 0.4 + j) * 0.07;
+        arr[j * 3] = Math.sin(s.b) * Math.cos(ang) * rr;
+        arr[j * 3 + 1] = Math.cos(s.b) * rr * 0.8;
+        arr[j * 3 + 2] = Math.sin(s.b) * Math.sin(ang) * rr;
+      }
+      pGeo.attributes.position.needsUpdate = true;
+
+      renderer.render(scene, cam);
+    }
+    tick();
+    stage.classList.add("live");
+
+    return {
+      destroy: function () {
+        cancelAnimationFrame(raf); ro.disconnect(); io.disconnect();
+        window.removeEventListener("pointermove", onMove);
+        window.removeEventListener("scroll", onScroll);
+        renderer.dispose();
+        if (renderer.domElement.parentNode) renderer.domElement.parentNode.removeChild(renderer.domElement);
+        stage.classList.remove("live");
+      }
+    };
+  }
+
+  function start() {
+    if (ctx || !big.matches || reduce.matches) return;
+    loadScript("../lib/three-0.134.0/three.min.js")
+      .then(function () { try { ctx = build(); } catch (e) { /* CSS cell stays */ } })
+      .catch(function () {});
+  }
+  function stop() { if (ctx) { ctx.destroy(); ctx = null; } }
+  start();
+  big.addEventListener("change", function () { big.matches ? start() : stop(); });
+  window.addEventListener("viewchange", function (e) { e.detail === "home" ? start() : stop(); });
+});
+</script>
+
 </body>
 </html>
