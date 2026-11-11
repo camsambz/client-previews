@@ -260,6 +260,13 @@ footer.site a:hover{color:var(--ember)}
 .band.light{border-radius:34px 34px 0 0;margin-top:-34px;position:relative;z-index:2}
 footer.site{border-radius:34px 34px 0 0;margin-top:-34px;position:relative;z-index:4}
 
+@media (min-width:1041px) and (max-height:860px){
+  .hero{padding-block:clamp(34px,5vh,64px) clamp(30px,5vh,56px)}
+  .hero-figure{min-height:min(48vh,400px)}
+  .cell-stage{width:min(100%,400px)}
+  .hero .lede{margin-top:16px}
+  .ticker{margin-top:26px}
+}
 @media (max-width:1040px){
   .hero-inner{grid-template-columns:1fr;gap:28px}
   .hero-figure{min-height:0;order:2}
